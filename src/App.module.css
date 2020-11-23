@@ -1,0 +1,13 @@
+.appWrapper {
+    display: grid;
+    grid-template-areas:
+'h h'
+'n p';
+    grid-template-rows: 60px 1fr;
+    grid-auto-columns: 2fr 10fr;
+}
+
+.appWrapperContent {
+    grid-area: p;
+    background-color: #c1e6f4;
+}
