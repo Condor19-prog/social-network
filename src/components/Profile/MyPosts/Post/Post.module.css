@@ -1,0 +1,8 @@
+.item {
+    color: #9700c6;
+    padding: 5px;
+}
+.item img {
+    width: 50px;
+    border-radius: 50px;
+}
