@@ -1,15 +1,12 @@
 import React from "react";
 import Post from "./Post/Post";
 import s from './Posts.module.css'
+import {profilePageType} from "../../../Redux/state";
 
 
-function MyPosts() {
+function MyPosts(props: profilePageType) {
 
-    const postData = [
-        {id: 1, message: 'Bonjour', likesCount: 12},
-        {id: 2, message: 'Когда вернешь долг?', likesCount: 100000}
-    ]
-    let postsElements = postData.map(p => <Post message={p.message} likeCounts={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post message={p.message} likeCounts={p.likesCount} key={p.id}/>)
 
     return (
         <div className={s.posts}>

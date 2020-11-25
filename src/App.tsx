@@ -5,16 +5,23 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
+import {rootStateType} from "./Redux/state";
 
-function App() {
+type appType = {
+    state: rootStateType
+}
+
+function App(props: appType) {
     return (
         <BrowserRouter>
             <div className={s.appWrapper}>
                 <Header/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
-                    <Route path='/Profile' render={() => <Profile/>}/>
-                    <Route path='/Dialogs' render={() => <Dialogs/>}/>
+                    <Route path='/Profile' render={() => <Profile posts={props.state.profilePage.posts}/>}/>
+                    <Route path='/Dialogs' render={() => <Dialogs dialogs={props.state.dialogPage.dialogs}
+                                                                  messages={props.state.dialogPage.messages}
+                    />}/>
                 </div>
             </div>
         </BrowserRouter>
