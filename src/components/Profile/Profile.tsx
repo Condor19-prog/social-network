@@ -1,17 +1,13 @@
 import React from "react";
 import s from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
 function Profile() {
     return (
         <div>
-            <div>
-                <img src="https://i.ytimg.com/vi/xX5vNmZMLNk/hqdefault.jpg" alt="content"/>
-            </div>
-            <div>
-                ava + description
-            </div>
+            <ProfileInfo/>
             <MyPosts/>
         </div>
     )
