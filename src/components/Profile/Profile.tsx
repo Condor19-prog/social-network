@@ -4,12 +4,17 @@ import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {profilePageType} from "../../Redux/state";
 
+type profileType = {
+    posts: profilePageType
+    addPost: (postMessage: string) => void
+}
 
-function Profile(props: profilePageType) {
+
+function Profile(props: profileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.posts}/>
+            <MyPosts posts={props.posts} addPost={props.addPost}/>
         </div>
     )
 }
