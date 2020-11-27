@@ -1,5 +1,6 @@
-import {renderEntireTree} from "../render";
-
+let renderEntireTree = () => {
+    console.log('123')
+}
 export type postsType = {
     id: number
     message: string
@@ -58,9 +59,12 @@ export const addPost = () => {
     }
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ''
-    renderEntireTree(state)
+    renderEntireTree()
 }
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
-    renderEntireTree(state)
+    renderEntireTree()
+}
+export const subscribe = (observer: () => void) => {
+    renderEntireTree = observer
 }
