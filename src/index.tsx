@@ -4,15 +4,15 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import store from "./Redux/state";
 
-export let callSubscriber = () => {
+export let renderEntireTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <App state={store.getState()}
-                 addPost={store.addPost}
-                 updateNewPostText={store.updateNewPostText}/>
+                 addPost={store.addPost.bind(store)}
+                 updateNewPostText={store.updateNewPostText.bind(store)}/>
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
-callSubscriber(store.getState)
+renderEntireTree()
 store.subscribe(renderEntireTree)

@@ -1,14 +1,16 @@
+import {v1} from "uuid";
+
 export type postsType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
 type messagesType = {
-    id: number
+    id: string
     message: string
 }
 type dialogsType = {
-    id: number
+    id: string
     name: string
 }
 export type profilePageType = {
@@ -26,59 +28,59 @@ export type rootStateType = {
 
 export type storeType = {
     _state: rootStateType
-    callSubscriber: (_state: rootStateType) => void
+    renderEntireTree: (_state: rootStateType) => void
     addPost: () => void
     updateNewPostText: (newText: string) => void
     subscribe: (observer: () => void) => void
-    getState: () => void
+    getState: () => rootStateType
 }
 
 let store: storeType = {
     _state: {
         profilePage: {
             posts: [
-                {id: 1, message: 'Bonjour', likesCount: 12},
-                {id: 2, message: 'Когда вернешь долг?', likesCount: 100000}
+                {id: v1(), message: 'Bonjour', likesCount: 12},
+                {id: v1(), message: 'Когда вернешь долг?', likesCount: 100000}
             ],
             newPostText: ''
         },
         dialogPage: {
             messages: [
-                {id: 1, message: 'Bonjour'},
-                {id: 2, message: 'Hello'},
-                {id: 3, message: 'Привет'},
-                {id: 4, message: 'Heil'},
+                {id: v1(), message: 'Bonjour'},
+                {id: v1(), message: 'Hello'},
+                {id: v1(), message: 'Привет'},
+                {id: v1(), message: 'Heil'},
             ],
             dialogs: [
-                {id: 1, name: 'Dimych'},
-                {id: 2, name: 'Sveta'},
-                {id: 3, name: 'Artem'},
-                {id: 4, name: 'Ivan'},
+                {id: v1(), name: 'Dimych'},
+                {id: v1(), name: 'Sveta'},
+                {id: v1(), name: 'Artem'},
+                {id: v1(), name: 'Ivan'},
             ]
         }
     },
-    callSubscriber() {
+    getState() {
+        return this._state
+    },
+    renderEntireTree() {
         console.log('123')
     },
     addPost() {
         const newPost: postsType = {
-            id: 5,
+            id: v1(),
             message: this._state.profilePage.newPostText,
             likesCount: 0
         }
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ''
-        this.callSubscriber(this._state)
+        this.renderEntireTree(this._state)
     },
     updateNewPostText(newText: string) {
         this._state.profilePage.newPostText = newText
-        this.callSubscriber(this._state)
+        this.renderEntireTree(this._state)
     },
     subscribe(observer) {
-        this.callSubscriber = observer
-    },
-    getState() {
-        return this._state
+        this.renderEntireTree = observer
     }
 }
 
