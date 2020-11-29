@@ -1,10 +1,12 @@
 import {v1} from "uuid";
 
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
 export type actionsType = addPostActionType | updateNewPostText
 
 type addPostActionType = {
     type: 'ADD-POST'
-    // newMessage: string
 }
 type updateNewPostText = {
     type: 'UPDATE-NEW-POST-TEXT'
@@ -80,7 +82,7 @@ let store: storeType = {
 
     dispatch(action) {
         switch (action.type) {
-            case "ADD-POST":
+            case ADD_POST:
                 const newPost: postsType = {
                     id: v1(),
                     message: store._state.profilePage.newPostText,
@@ -90,13 +92,20 @@ let store: storeType = {
                 this._state.profilePage.newPostText = ''
                 this.renderEntireTree(this._state)
                 break;
-            case 'UPDATE-NEW-POST-TEXT':
+            case UPDATE_NEW_POST_TEXT:
                 this._state.profilePage.newPostText = action.newText
                 this.renderEntireTree(this._state)
                 break;
         }
     }
 
+}
+export const addPostAC = (): addPostActionType => ({type: "ADD-POST"})
+export const updateNewPostAC = (text: string): updateNewPostText => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: text
+    }
 }
 
 export default store

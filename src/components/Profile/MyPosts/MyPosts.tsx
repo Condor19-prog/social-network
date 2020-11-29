@@ -1,7 +1,12 @@
 import React from "react";
 import Post from "./Post/Post";
 import s from './Posts.module.css'
-import {actionsType, profilePageType} from "../../../Redux/state";
+import {
+    actionsType,
+    addPostAC,
+    profilePageType,
+    updateNewPostAC,
+} from "../../../Redux/state";
 
 type myPostsType = {
     profilePageType: profilePageType
@@ -11,19 +16,20 @@ type myPostsType = {
 
 function MyPosts(props: myPostsType) {
 
-    let postsElements = props.profilePageType.posts.map(p => <Post message={p.message} likeCounts={p.likesCount} key={p.id}/>)
+    let postsElements = props.profilePageType.posts.map(p => <Post message={p.message} likeCounts={p.likesCount}
+                                                                   key={p.id}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
         if (newPostElement.current) {
-            props.dispatch({type: "ADD-POST"})
+            props.dispatch(addPostAC())
         }
     }
     const onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: text})
+            props.dispatch(updateNewPostAC(text))
         }
     }
 
