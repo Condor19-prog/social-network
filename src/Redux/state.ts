@@ -1,5 +1,16 @@
 import {v1} from "uuid";
 
+export type actionsType = addPostActionType | updateNewPostText
+
+type addPostActionType = {
+    type: 'ADD-POST'
+    // newMessage: string
+}
+type updateNewPostText = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+
 export type postsType = {
     id: string
     message: string
@@ -25,14 +36,12 @@ export type rootStateType = {
     profilePage: profilePageType
     dialogPage: dialogPageType
 }
-
 export type storeType = {
     _state: rootStateType
     renderEntireTree: (_state: rootStateType) => void
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
     subscribe: (observer: () => void) => void
     getState: () => rootStateType
+    dispatch: (action: actionsType) => void
 }
 
 let store: storeType = {
@@ -59,29 +68,35 @@ let store: storeType = {
             ]
         }
     },
-    getState() {
-        return this._state
-    },
     renderEntireTree() {
         console.log('123')
     },
-    addPost() {
-        const newPost: postsType = {
-            id: v1(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this.renderEntireTree(this._state)
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this.renderEntireTree(this._state)
+    getState() {
+        return this._state
     },
     subscribe(observer) {
         this.renderEntireTree = observer
+    },
+
+    dispatch(action) {
+        switch (action.type) {
+            case "ADD-POST":
+                const newPost: postsType = {
+                    id: v1(),
+                    message: store._state.profilePage.newPostText,
+                    likesCount: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ''
+                this.renderEntireTree(this._state)
+                break;
+            case 'UPDATE-NEW-POST-TEXT':
+                this._state.profilePage.newPostText = action.newText
+                this.renderEntireTree(this._state)
+                break;
+        }
     }
+
 }
 
 export default store

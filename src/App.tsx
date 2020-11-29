@@ -5,12 +5,11 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import {rootStateType} from "./Redux/state";
+import {actionsType, rootStateType} from "./Redux/state";
 
 type appType = {
     state: rootStateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: actionsType) => void
 }
 
 function App(props: appType) {
@@ -21,9 +20,7 @@ function App(props: appType) {
                 <Navbar/>
                 <div className={s.appWrapperContent}>
                     <Route path='/Profile' render={() => <Profile posts={props.state.profilePage}
-                                                                  addPost={props.addPost}
-                                                                  updateNewPostText={props.updateNewPostText}
-                                                                  newPostText={props.state.profilePage.newPostText}
+                                                                  dispatch={props.dispatch}
                     />}/>
                     <Route path='/Dialogs' render={() => <Dialogs dialogs={props.state.dialogPage.dialogs}
                                                                   messages={props.state.dialogPage.messages}
