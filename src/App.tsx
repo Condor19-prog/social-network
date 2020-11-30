@@ -8,7 +8,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import {actionsType, rootStateType} from "./Redux/state";
 
 type appType = {
-    state: rootStateType
+    store: rootStateType
     dispatch: (action: actionsType) => void
 }
 
@@ -19,11 +19,12 @@ function App(props: appType) {
                 <Header/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
-                    <Route path='/Profile' render={() => <Profile posts={props.state.profilePage}
+                    <Route path='/Profile' render={() => <Profile posts={props.store.profilePage}
                                                                   dispatch={props.dispatch}
                     />}/>
-                    <Route path='/Dialogs' render={() => <Dialogs dialogs={props.state.dialogPage.dialogs}
-                                                                  messages={props.state.dialogPage.messages}
+                    <Route path='/Dialogs' render={() => <Dialogs dialogsAndMessages={props.store.dialogPage}
+                                                                  dispatch={props.dispatch}
+
                     />}/>
                 </div>
             </div>

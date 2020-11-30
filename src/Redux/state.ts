@@ -2,9 +2,17 @@ import {v1} from "uuid";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
-export type actionsType = addPostActionType | updateNewPostText
-
+export type actionsType = addPostActionType | updateNewPostText | updateNewMessageBodyType | sendMessageType
+type sendMessageType = {
+    type: 'SEND-MESSAGE'
+}
+type updateNewMessageBodyType = {
+    type: 'UPDATE-NEW-MESSAGE-BODY'
+    messageBody: string
+}
 type addPostActionType = {
     type: 'ADD-POST'
 }
@@ -18,11 +26,11 @@ export type postsType = {
     message: string
     likesCount: number
 }
-type messagesType = {
+export type messagesType = {
     id: string
     message: string
 }
-type dialogsType = {
+export type dialogsType = {
     id: string
     name: string
 }
@@ -33,6 +41,7 @@ export type profilePageType = {
 export type dialogPageType = {
     dialogs: Array<dialogsType>
     messages: Array<messagesType>
+    newMessageBody: string
 }
 export type rootStateType = {
     profilePage: profilePageType
@@ -46,7 +55,7 @@ export type storeType = {
     dispatch: (action: actionsType) => void
 }
 
-let store: storeType = {
+export const store: storeType = {
     _state: {
         profilePage: {
             posts: [
@@ -67,7 +76,8 @@ let store: storeType = {
                 {id: v1(), name: 'Sveta'},
                 {id: v1(), name: 'Artem'},
                 {id: v1(), name: 'Ivan'},
-            ]
+            ],
+            newMessageBody: ''
         }
     },
     renderEntireTree() {
@@ -96,17 +106,33 @@ let store: storeType = {
                 this._state.profilePage.newPostText = action.newText
                 this.renderEntireTree(this._state)
                 break;
+            case UPDATE_NEW_MESSAGE_BODY:
+                this._state.dialogPage.newMessageBody = action.messageBody
+                this.renderEntireTree(this._state)
+                break
+            case SEND_MESSAGE:
+                debugger
+                const body = this._state.dialogPage.newMessageBody
+                this._state.dialogPage.newMessageBody = ''
+                this._state.dialogPage.messages.push({id: v1(), message: body})
+                this.renderEntireTree(this._state)
         }
     }
-
 }
-export const addPostAC = (): addPostActionType => ({type: "ADD-POST"})
+export const addPostAC = (): addPostActionType => ({type: ADD_POST})
 export const updateNewPostAC = (text: string): updateNewPostText => {
     return {
-        type: "UPDATE-NEW-POST-TEXT",
+        type: UPDATE_NEW_POST_TEXT,
         newText: text
     }
 }
+export const UpdateNewMessageBodyAC = (newMessageBody: string): updateNewMessageBodyType => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        messageBody: newMessageBody
+    }
+}
+export const sendMessageAC = (): sendMessageType => ({type: SEND_MESSAGE})
 
 export default store
 
