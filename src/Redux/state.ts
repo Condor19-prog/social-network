@@ -1,22 +1,19 @@
 import {v1} from "uuid";
-
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
-const SEND_MESSAGE = 'SEND-MESSAGE'
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
 
 export type actionsType = addPostActionType | updateNewPostText | updateNewMessageBodyType | sendMessageType
-type sendMessageType = {
+export type sendMessageType = {
     type: 'SEND-MESSAGE'
 }
-type updateNewMessageBodyType = {
+export type updateNewMessageBodyType = {
     type: 'UPDATE-NEW-MESSAGE-BODY'
     messageBody: string
 }
-type addPostActionType = {
+export type addPostActionType = {
     type: 'ADD-POST'
 }
-type updateNewPostText = {
+export type updateNewPostText = {
     type: 'UPDATE-NEW-POST-TEXT'
     newText: string
 }
@@ -91,48 +88,14 @@ export const store: storeType = {
     },
 
     dispatch(action) {
-        switch (action.type) {
-            case ADD_POST:
-                const newPost: postsType = {
-                    id: v1(),
-                    message: store._state.profilePage.newPostText,
-                    likesCount: 0
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.newPostText = ''
-                this.renderEntireTree(this._state)
-                break;
-            case UPDATE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.newText
-                this.renderEntireTree(this._state)
-                break;
-            case UPDATE_NEW_MESSAGE_BODY:
-                this._state.dialogPage.newMessageBody = action.messageBody
-                this.renderEntireTree(this._state)
-                break
-            case SEND_MESSAGE:
-                debugger
-                const body = this._state.dialogPage.newMessageBody
-                this._state.dialogPage.newMessageBody = ''
-                this._state.dialogPage.messages.push({id: v1(), message: body})
-                this.renderEntireTree(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
+        this.renderEntireTree(this._state)
     }
 }
-export const addPostAC = (): addPostActionType => ({type: ADD_POST})
-export const updateNewPostAC = (text: string): updateNewPostText => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    }
-}
-export const UpdateNewMessageBodyAC = (newMessageBody: string): updateNewMessageBodyType => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        messageBody: newMessageBody
-    }
-}
-export const sendMessageAC = (): sendMessageType => ({type: SEND_MESSAGE})
+
+
+
 
 export default store
 

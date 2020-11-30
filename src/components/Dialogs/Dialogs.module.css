@@ -1,11 +1,15 @@
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 2fr 6fr;
+    padding: 15px;
 }
 
 .dialogsItems {
     padding: 5px;
+}
+.dialogsItems .dialogItem{
     text-decoration: none;
+    padding-bottom: 5px;
 }
 
 .messages {
@@ -13,13 +17,15 @@
 }
 
 .messages .message {
-
+    padding-bottom: 5px;
 }
-.textarea{
+
+.textarea {
     margin-top: 5px;
     position: relative;
 }
-.send{
+
+.send {
     position: absolute;
     padding: 5px 15px;
     margin-left: 9em;
