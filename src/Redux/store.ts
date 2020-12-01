@@ -2,7 +2,12 @@ import {v1} from "uuid";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
-export type actionsType = addPostActionType | updateNewPostText | updateNewMessageBodyType | sendMessageType
+export type actionsType =
+    addPostActionType |
+    updateNewPostText |
+    updateNewMessageBodyType |
+    sendMessageType
+
 export type sendMessageType = {
     type: 'SEND-MESSAGE'
 }
