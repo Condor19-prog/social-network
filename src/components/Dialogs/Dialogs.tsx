@@ -6,22 +6,23 @@ import {actionsType, dialogPageType} from "../../Redux/store";
 import {sendMessageAC, UpdateNewMessageBodyAC} from "../../Redux/dialogs-reducer";
 
 type dialogsPropsType = {
-    dialogsAndMessages: dialogPageType
-    dispatch: (action: actionsType) => void
+    dialogsPage: dialogPageType
+    sendMessage: () => void
+    UpdateNewMessageBody: (newMessageBody: string) => void
 }
 
 function Dialogs(props: dialogsPropsType) {
 
-    const dialogsElements = props.dialogsAndMessages.dialogs.map(d => <DialogItem id={d.id} name={d.name} key={d.id}/>)
-    const messagesElements = props.dialogsAndMessages.messages.map(m => <Message message={m.message} key={m.id}/>)
-    const newMessageBody = props.dialogsAndMessages.newMessageBody
+    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name} key={d.id}/>)
+    const messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} key={m.id}/>)
+    const newMessageBody = props.dialogsPage.newMessageBody
 
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageAC())
+        props.sendMessage()
     }
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newMessageBody = e.currentTarget.value
-        props.dispatch(UpdateNewMessageBodyAC(newMessageBody))
+        props.UpdateNewMessageBody(newMessageBody)
     }
 
     return (

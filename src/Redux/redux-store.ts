@@ -4,12 +4,11 @@ import dialogsReducer from "./dialogs-reducer";
 
 
 
-const reducers =
-    combineReducers({
+const reducers = combineReducers({
     profilePage: profileReducer,
     dialogPage: dialogsReducer
 })
 
-const store = createStore(reducers)
+let store = createStore(reducers)
 
 export default store
