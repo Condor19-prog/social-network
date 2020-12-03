@@ -23,7 +23,7 @@ const dialogsReducer = (state = initialState, action: actionsType) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             state.newMessageBody = action.messageBody
-            return state
+            return {...state}
         case SEND_MESSAGE:
             const body = state.newMessageBody
             if (state.newMessageBody) {
@@ -33,7 +33,7 @@ const dialogsReducer = (state = initialState, action: actionsType) => {
                 alert('введите сообщение')
             }
             state.newMessageBody = ''
-            return state
+            return {...state}
         default:
             return state
     }

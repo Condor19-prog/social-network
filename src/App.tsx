@@ -9,9 +9,9 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 type appType = {
-    store: any
-    dispatch: (action: actionsType) => void
-    state: rootStateType
+    // store: any
+    // dispatch: (action: actionsType) => void
+    // state: rootStateType
 }
 
 function App(props: appType) {
@@ -20,8 +20,14 @@ function App(props: appType) {
                 <Header/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
-                    <Route path='/Profile' render={() => <Profile store={props.store} dispatch={props.dispatch} profilePage={props.state.profilePage}/>}/>
-                    <Route path='/Dialogs' render={() => <DialogsContainer store={props.store} />}/>
+                    <Route path='/Profile' render={() => <Profile
+                        // store={props.store}
+                        // dispatch={props.dispatch}
+                        // profilePage={props.state.profilePage}
+                    />}/>
+                    <Route path='/Dialogs' render={() => <DialogsContainer
+                        // store={props.store}
+                    />}/>
                 </div>
             </div>
     );
