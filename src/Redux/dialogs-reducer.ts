@@ -1,5 +1,5 @@
-import {actionsType, dialogPageType, sendMessageType, updateNewMessageBodyType} from "./store";
 import {v1} from "uuid";
+import {actionsType, dialogPageType, sendMessageType, updateNewMessageBodyType} from "./redux-store";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
@@ -19,21 +19,29 @@ const initialState = {
     newMessageBody: ''
 }
 
-const dialogsReducer = (state = initialState, action: actionsType) => {
+const dialogsReducer = (state = initialState, action: actionsType): dialogPageType => {
+
+    let stateCopy
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.messageBody
-            return {...state}
+            return {
+                ...state,
+                newMessageBody: action.messageBody
+            }
+
         case SEND_MESSAGE:
             const body = state.newMessageBody
             if (state.newMessageBody) {
-                state.messages.push({id: v1(), message: body})
-                state.dialogs.push({id: v1(), name: 'IT-incubator'})
+                return {
+                    ...state,
+                    newMessageBody: '',
+                    messages: [...state.messages, {id: v1(), message: body}],
+                    dialogs: [...state.dialogs, {id: v1(), name: 'IT-incubator'}]
+                }
             } else {
                 alert('введите сообщение')
             }
-            state.newMessageBody = ''
-            return {...state}
+            return state
         default:
             return state
     }
