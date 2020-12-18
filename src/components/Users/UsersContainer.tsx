@@ -1,4 +1,4 @@
-import React, {Dispatch} from "react";
+import {Dispatch} from "react";
 import {connect} from "react-redux";
 import Users from "./Users";
 import {actionsType, RootState} from "../../Redux/redux-store";

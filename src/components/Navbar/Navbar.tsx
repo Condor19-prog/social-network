@@ -18,6 +18,11 @@ function Navbar() {
                     </NavLink>
                 </div>
                 <div>
+                    <NavLink to='Users' activeClassName={s.activeLink}>
+                        Users
+                    </NavLink>
+                </div>
+                <div>
                     News
                 </div>
                 <div>
