@@ -1,7 +1,12 @@
 import {combineReducers, createStore} from "redux";
 import profileReducer, {addPostACType} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
-import usersReducer, {followActionType, setUsersActionType, UnFollowActionType} from "./users-reducer";
+import usersReducer, {
+    followActionType,
+    setCurrentPageType,
+    setUsersActionType, setUsersTotalCount,
+    UnFollowActionType
+} from "./users-reducer";
 
 export type actionsType =
     addPostActionType |
@@ -11,7 +16,9 @@ export type actionsType =
     addPostACType |
     followActionType |
     UnFollowActionType |
-    setUsersActionType
+    setUsersActionType |
+    setCurrentPageType |
+    setUsersTotalCount
 
 
 export type sendMessageType = {
@@ -29,7 +36,6 @@ export type updateNewPostTextType = {
     type: 'UPDATE-NEW-POST-TEXT'
     newText: string
 }
-
 
 
 export type postsType = {
