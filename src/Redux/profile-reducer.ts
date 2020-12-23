@@ -16,29 +16,34 @@ const initialState: profilePageType = {
 const profileReducer = (state = initialState, action: actionsType): profilePageType => {
 
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             const newPost: postsType = {
                 id: v1(),
                 message: state.newPostText,
                 likesCount: 0
+            }
+            if (state.newPostText === '') {
+                alert('введи что нить')
+                return state
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: ''
             }
-
-        case UPDATE_NEW_POST_TEXT:
+        }
+        case UPDATE_NEW_POST_TEXT: {
             return {
                 ...state,
                 newPostText: action.newText
             }
+        }
         default:
             return state
     }
 }
-export const addPostAC = (newPostText: string): addPostActionType => {
-    return {type: "ADD-POST", newPostText}
+export const addPostAC = (): addPostActionType => {
+    return {type: "ADD-POST"}
 }
 export const updateNewPostAC = (text: string): updateNewPostTextType => {
     return {

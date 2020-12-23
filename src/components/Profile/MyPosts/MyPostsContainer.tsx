@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch: Dispatch<actionsType> ) => {
 
 
     return {
-        addPost: (newPostText: string) => {
-            dispatch(addPostAC(newPostText))
+        addPost: () => {
+            dispatch(addPostAC())
         },
         updateNewPostText: (text: string) => {
             dispatch(updateNewPostAC(text))

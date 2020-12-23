@@ -30,7 +30,7 @@ export type updateNewMessageBodyType = {
 }
 export type addPostActionType = {
     type: 'ADD-POST'
-    newPostText: string
+
 }
 export type updateNewPostTextType = {
     type: 'UPDATE-NEW-POST-TEXT'
