@@ -16,7 +16,6 @@ const mapStateToProps = (state: RootState) => {
 }
 const mapDispatchToProps = (dispatch: Dispatch<actionsType> ) => {
 
-
     return {
         addPost: () => {
             dispatch(addPostAC())

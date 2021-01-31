@@ -27,10 +27,10 @@ function MyPosts(props: myPostsType) {
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        if (e.currentTarget.value) {
+        // if (e.currentTarget.value) {
             let text = e.currentTarget.value
             props.updateNewPostText(text)
-        }
+        // }
     }
 
     return (

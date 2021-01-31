@@ -5,6 +5,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
 export type setUsersActionType = {
     type: 'SET-USERS'
     users: Array<userType>
@@ -25,6 +26,10 @@ export type setUsersTotalCount = {
     type: 'SET-USERS-TOTAL-COUNT'
     totalCount: number
 }
+export type setIsFetchingType = {
+    type: 'TOGGLE-IS-FETCHING'
+    isFetching: boolean
+}
 export type userType = {
     id: string
     photos: {
@@ -42,7 +47,8 @@ const initialState = {
     users: [] as Array<userType>,
     pageSize: 10,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 
@@ -79,6 +85,9 @@ export const usersReducer = (state: stateType = initialState, action: actionsTyp
         case SET_USERS_TOTAL_COUNT: {
             return {...state, totalUsersCount: action.totalCount}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
         default:
             return state
     }
@@ -99,4 +108,8 @@ export const setCurrentPageAC = (pageNumber: number): setCurrentPageType => {
 export const setUsersTotalCountAC = (totalCount: number): setUsersTotalCount => {
     return {type: SET_USERS_TOTAL_COUNT, totalCount}
 }
+export const toggleIsFetchingAC = (isFetching: boolean): setIsFetchingType => {
+    return {type: TOGGLE_IS_FETCHING, isFetching}
+}
+
 export default usersReducer

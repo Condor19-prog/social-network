@@ -2,6 +2,7 @@ import React from "react";
 import s from "./users.module.css";
 import {userType} from "../../Redux/users-reducer";
 import userPhoto from "../../assets/photo/user-male.png";
+import Preloader from "../Common/Preloader/Preloader";
 
 type usersPropsType = {
     users: Array<userType>
@@ -13,6 +14,7 @@ type usersPropsType = {
     currentPage: number
     setCurrentPage: (pageNumber: number) => void
     onPageChanged: (pageNumber: number) => void
+    isFetching: boolean
 }
 
 const Users = (props: usersPropsType) => {
@@ -32,6 +34,7 @@ const Users = (props: usersPropsType) => {
                                  onClick={() => props.onPageChanged(p)}>{p}</span>
                 })}
             </div>
+            {props.isFetching ? <Preloader/> : null}
             {
                 props.users.map((u: userType) => <div className={s.users} key={u.id}>
                 <span>

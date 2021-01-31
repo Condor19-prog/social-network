@@ -4,7 +4,9 @@ import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
     followActionType,
     setCurrentPageType,
-    setUsersActionType, setUsersTotalCount,
+    setIsFetchingType,
+    setUsersActionType,
+    setUsersTotalCount,
     UnFollowActionType
 } from "./users-reducer";
 
@@ -18,7 +20,8 @@ export type actionsType =
     UnFollowActionType |
     setUsersActionType |
     setCurrentPageType |
-    setUsersTotalCount
+    setUsersTotalCount |
+    setIsFetchingType
 
 
 export type sendMessageType = {
