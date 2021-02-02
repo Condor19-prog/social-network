@@ -22,7 +22,7 @@ export type setCurrentPageType = {
     type: 'SET-CURRENT-PAGE'
     pageNumber: number
 }
-export type setUsersTotalCount = {
+export type setUsersTotalCountType = {
     type: 'SET-USERS-TOTAL-COUNT'
     totalCount: number
 }
@@ -93,22 +93,22 @@ export const usersReducer = (state: stateType = initialState, action: actionsTyp
     }
 }
 
-export const followAC = (userId: string): followActionType => {
+export const follow = (userId: string): followActionType => {
     return {type: FOLLOW, userId}
 }
-export const unFollowAC = (userId: string): UnFollowActionType => {
+export const unFollow = (userId: string): UnFollowActionType => {
     return {type: UNFOLLOW, userId}
 }
-export const setUsersAC = (users: Array<userType>): setUsersActionType => {
+export const setUsers = (users: Array<userType>): setUsersActionType => {
     return {type: SET_USERS, users}
 }
-export const setCurrentPageAC = (pageNumber: number): setCurrentPageType => {
+export const setCurrentPage = (pageNumber: number): setCurrentPageType => {
     return {type: SET_CURRENT_PAGE, pageNumber}
 }
-export const setUsersTotalCountAC = (totalCount: number): setUsersTotalCount => {
+export const setUsersTotalCount = (totalCount: number): setUsersTotalCountType => {
     return {type: SET_USERS_TOTAL_COUNT, totalCount}
 }
-export const toggleIsFetchingAC = (isFetching: boolean): setIsFetchingType => {
+export const toggleIsFetching = (isFetching: boolean): setIsFetchingType => {
     return {type: TOGGLE_IS_FETCHING, isFetching}
 }
 

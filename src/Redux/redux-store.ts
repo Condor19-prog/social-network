@@ -6,7 +6,7 @@ import usersReducer, {
     setCurrentPageType,
     setIsFetchingType,
     setUsersActionType,
-    setUsersTotalCount,
+    setUsersTotalCountType,
     UnFollowActionType
 } from "./users-reducer";
 
@@ -20,7 +20,7 @@ export type actionsType =
     UnFollowActionType |
     setUsersActionType |
     setCurrentPageType |
-    setUsersTotalCount |
+    setUsersTotalCountType |
     setIsFetchingType
 
 
