@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 
@@ -15,7 +16,7 @@ function App() {
             <Header/>
             <Navbar/>
             <div className={s.appWrapperContent}>
-                <Route path='/Profile' render={() => <Profile/>}/>
+                <Route path='/Profile' render={() => <ProfileContainer/>}/>
                 <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
                 <Route path='/Users' render={() => <UsersContainer/>}/>
             </div>

@@ -21,9 +21,13 @@ export type actionsType =
     setUsersActionType |
     setCurrentPageType |
     setUsersTotalCountType |
-    setIsFetchingType
+    setIsFetchingType |
+    setUserProfileType
 
-
+export type setUserProfileType = {
+    type: 'SET-USER-PROFILE'
+    profile: any
+}
 export type sendMessageType = {
     type: 'SEND-MESSAGE'
 }
@@ -58,6 +62,7 @@ export type dialogsType = {
 export type profilePageType = {
     posts: Array<postsType>
     newPostText: string
+    profile: any
 }
 export type dialogPageType = {
     dialogs: Array<dialogsType>
