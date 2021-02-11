@@ -7,6 +7,7 @@ type profileInfoType = {
 }
 
 function ProfileInfo(props: profileInfoType) {
+
     if (!props.profile) {
         return <Preloader/>
     }

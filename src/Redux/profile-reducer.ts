@@ -62,7 +62,7 @@ export const updateNewPostAC = (text: string): updateNewPostTextType => {
         newText: text
     }
 }
-export const setUserProfile = (profile: any): setUserProfileType => ({type: SET_USER_PROFILE, profile})
+export const setUserProfile = (profile: null): setUserProfileType => ({type: SET_USER_PROFILE, profile})
 
 export type addPostACType = ReturnType<typeof addPostAC>;
 

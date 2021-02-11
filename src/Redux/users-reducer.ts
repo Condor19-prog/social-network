@@ -24,7 +24,7 @@ export type setCurrentPageType = {
 }
 export type setUsersTotalCountType = {
     type: 'SET-USERS-TOTAL-COUNT'
-    totalCount: number
+    count: number
 }
 export type setIsFetchingType = {
     type: 'TOGGLE-IS-FETCHING'
@@ -83,7 +83,7 @@ export const usersReducer = (state: stateType = initialState, action: actionsTyp
             return {...state, currentPage: action.pageNumber}
         }
         case SET_USERS_TOTAL_COUNT: {
-            return {...state, totalUsersCount: action.totalCount}
+            return {...state, totalUsersCount: action.count}
         }
         case TOGGLE_IS_FETCHING: {
             return {...state, isFetching: action.isFetching}
@@ -106,7 +106,7 @@ export const setCurrentPage = (pageNumber: number): setCurrentPageType => {
     return {type: SET_CURRENT_PAGE, pageNumber}
 }
 export const setUsersTotalCount = (totalCount: number): setUsersTotalCountType => {
-    return {type: SET_USERS_TOTAL_COUNT, totalCount}
+    return {type: SET_USERS_TOTAL_COUNT, count :totalCount}
 }
 export const toggleIsFetching = (isFetching: boolean): setIsFetchingType => {
     return {type: TOGGLE_IS_FETCHING, isFetching}

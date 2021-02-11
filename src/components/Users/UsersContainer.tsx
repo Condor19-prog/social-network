@@ -31,6 +31,7 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
         props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
             .then(response => {
+                debugger
                     props.toggleIsFetching(false)
                     props.setUsers(response.data.items)
                     props.setUsersTotalCount(response.data.totalCount)
