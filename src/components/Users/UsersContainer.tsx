@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {RootState} from "../../Redux/redux-store";
 import {
@@ -27,17 +27,19 @@ type usersAPIComponentPropsType = {
     isFetching: boolean
 }
 const UsersContainer = (props: usersAPIComponentPropsType) => {
-    if (props.users.length === 0) {
-        props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
-            .then(response => {
-                debugger
-                    props.toggleIsFetching(false)
-                    props.setUsers(response.data.items)
-                    props.setUsersTotalCount(response.data.totalCount)
-                }
-            )
-    }
+    useEffect(() => {
+        if (props.users.length === 0) {
+            props.toggleIsFetching(true)
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
+                .then(response => {
+                        props.toggleIsFetching(false)
+                        props.setUsers(response.data.items)
+                        props.setUsersTotalCount(response.data.totalCount)
+                    }
+                )
+        }
+    }, [])
+
     const onPageChanged = (pageNumber: number) => {
         props.setCurrentPage(pageNumber)
         props.toggleIsFetching(true)

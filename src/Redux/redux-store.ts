@@ -9,6 +9,7 @@ import usersReducer, {
     setUsersTotalCountType,
     UnFollowActionType
 } from "./users-reducer";
+import {authReducer} from "./auth-reducer";
 
 export type actionsType =
     addPostActionType |
@@ -22,8 +23,17 @@ export type actionsType =
     setCurrentPageType |
     setUsersTotalCountType |
     setIsFetchingType |
-    setUserProfileType
+    setUserProfileType |
+    setUserDataType
 
+export type setUserDataType = {
+    type: 'SET_USER_DATA'
+    data: {
+        userId: number
+        email: string
+        login: string
+    }
+}
 export type setUserProfileType = {
     type: 'SET-USER-PROFILE'
     profile: any
@@ -69,12 +79,16 @@ export type dialogPageType = {
     messages: Array<messagesType>
     newMessageBody: string
 }
+// export type authLogin = {
+//     auth: setUserDataType
+// }
 
 
 const reducers = combineReducers({
     profilePage: profileReducer,
     dialogPage: dialogsReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 })
 
 export type RootState = ReturnType<typeof reducers>

@@ -5,8 +5,6 @@ import {connect} from "react-redux";
 import {actionsType, RootState} from "../../../Redux/redux-store";
 
 
-
-
 const mapStateToProps = (state: RootState) => {
 
     return {

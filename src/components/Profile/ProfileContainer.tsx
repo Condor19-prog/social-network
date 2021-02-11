@@ -6,10 +6,10 @@ import {setUserProfile} from "../../Redux/profile-reducer";
 import {RootState} from "../../Redux/redux-store";
 import {withRouter} from "react-router";
 
-type mapStateToProps = {
+type mapStateToPropsType = {
     profile: any
 }
-type mapDispatchToProps = {
+type mapDispatchToPropsType = {
     setUserProfile: (profile: any) => void
 }
 
@@ -40,4 +40,4 @@ const mapStateToProps = (state: RootState) => ({
     profile: state.profilePage.profile
 })
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)
-export default connect<mapStateToProps, mapDispatchToProps, {}, RootState>(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
+export default connect<mapStateToPropsType, mapDispatchToPropsType, {}, RootState>(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
