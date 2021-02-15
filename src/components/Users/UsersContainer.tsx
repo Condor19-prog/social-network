@@ -30,7 +30,11 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
     useEffect(() => {
         if (props.users.length === 0) {
             props.toggleIsFetching(true)
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`,
+                {
+                    withCredentials: true
+                }
+            )
                 .then(response => {
                         props.toggleIsFetching(false)
                         props.setUsers(response.data.items)
@@ -43,7 +47,11 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
     const onPageChanged = (pageNumber: number) => {
         props.setCurrentPage(pageNumber)
         props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${props.pageSize}`,
+            {
+                withCredentials: true
+            }
+        )
             .then(response => {
                     props.toggleIsFetching(false)
                     props.setUsers(response.data.items)
