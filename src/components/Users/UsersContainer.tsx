@@ -10,53 +10,42 @@ import {
     unFollow,
     userType
 } from "../../Redux/users-reducer";
-import axios from "axios";
 import Users from "./Users";
+import {usersAPI} from "../../api/api";
 
 type usersAPIComponentPropsType = {
     users: Array<userType>
     unFollow: (userId: string) => void
     follow: (userId: string) => void
     setUsers: (users: Array<userType>) => void
-    pageSize: number
     totalUsersCount: number
+    pageSize: number
     currentPage: number
     setCurrentPage: (pageNumber: number) => void
     setUsersTotalCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
     isFetching: boolean
 }
+
 const UsersContainer = (props: usersAPIComponentPropsType) => {
     useEffect(() => {
-        if (props.users.length === 0) {
-            props.toggleIsFetching(true)
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`,
-                {
-                    withCredentials: true
-                }
-            )
-                .then(response => {
-                        props.toggleIsFetching(false)
-                        props.setUsers(response.data.items)
-                        props.setUsersTotalCount(response.data.totalCount)
-                    }
-                )
-        }
+        props.toggleIsFetching(true)
+        usersAPI.getUsers(props.currentPage, props.pageSize)
+            .then(data => {
+                props.toggleIsFetching(false)
+                props.setUsers(data.items)
+                props.setUsersTotalCount(data.totalCount)
+            })
     }, [])
 
     const onPageChanged = (pageNumber: number) => {
         props.setCurrentPage(pageNumber)
         props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${props.pageSize}`,
-            {
-                withCredentials: true
-            }
-        )
-            .then(response => {
-                    props.toggleIsFetching(false)
-                    props.setUsers(response.data.items)
-                }
-            )
+        usersAPI.getUsers(pageNumber, props.pageSize)
+            .then(data => {
+                props.toggleIsFetching(false)
+                props.setUsers(data.items)
+            })
     }
 
     return (
