@@ -1,8 +1,8 @@
-import {combineReducers, createStore} from "redux";
+import {combineReducers, createStore, applyMiddleware} from "redux";
 import profileReducer, {addPostACType} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
-    followActionType,
+    followActionType, followingIsProgressType,
     setCurrentPageType,
     setIsFetchingType,
     setUsersActionType,
@@ -10,6 +10,7 @@ import usersReducer, {
     UnFollowActionType
 } from "./users-reducer";
 import {authReducer} from "./auth-reducer";
+import thunk from "redux-thunk";
 
 export type actionsType =
     addPostActionType |
@@ -24,7 +25,8 @@ export type actionsType =
     setUsersTotalCountType |
     setIsFetchingType |
     setUserProfileType |
-    setUserDataType
+    setUserDataType |
+    followingIsProgressType
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'
@@ -93,6 +95,6 @@ const reducers = combineReducers({
 
 export type RootState = ReturnType<typeof reducers>
 
-let store = createStore(reducers)
+let store = createStore(reducers, applyMiddleware(thunk))
 
 export default store
