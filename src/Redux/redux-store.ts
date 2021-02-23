@@ -33,7 +33,7 @@ export type setUserDataType = {
     data: {
         userId: number
         email: string
-        login: string
+        login: string | null
     }
 }
 export type setUserProfileType = {

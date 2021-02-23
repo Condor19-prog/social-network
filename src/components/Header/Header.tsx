@@ -4,10 +4,10 @@ import {NavLink} from "react-router-dom";
 
 type headerPropsType = {
     isAuth: boolean
-    login: number
+    login: number | null
 }
 
-function Header(props: any) {
+function Header(props: headerPropsType) {
     return (
         <header className={s.header}>
                 <img src="https://www.tuyid.org/images/clients/logoyazilim.png" alt="logo"/>

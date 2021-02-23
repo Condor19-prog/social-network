@@ -7,6 +7,8 @@ import {
     setUserProfileType,
     updateNewPostTextType
 } from "./redux-store";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -63,6 +65,12 @@ export const updateNewPostAC = (text: string): updateNewPostTextType => {
     }
 }
 export const setUserProfile = (profile: null): setUserProfileType => ({type: SET_USER_PROFILE, profile})
+export const getUserProfile = (userId: number) =>
+    (dispatch: Dispatch) => {
+        usersAPI.getProfile(userId).then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+    }
 
 export type addPostACType = ReturnType<typeof addPostAC>;
 
