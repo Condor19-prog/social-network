@@ -8,7 +8,9 @@ import {actionsType, RootState} from "../../Redux/redux-store";
 
 const mapStateToProps = (state: RootState) => {
     return {
-        dialogsPage: state.dialogPage
+        dialogsPage: state.dialogPage,
+        //@ts-ignore
+        isAuth: state.auth.isAuth
     }
 }
 const mapDispatchTpProps = (dispatch: Dispatch<actionsType>) => {
