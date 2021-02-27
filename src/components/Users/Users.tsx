@@ -12,7 +12,6 @@ type usersPropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    setCurrentPage: (pageNumber: number) => void
     onPageChanged: (pageNumber: number) => void
     isFetching: boolean
     followingIsProgress: any

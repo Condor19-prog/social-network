@@ -1,16 +1,17 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {profilePageType} from "../../Redux/redux-store";
 
 type profileType = {
-    profile: profilePageType | null
+    profile: any
+    status: string
+    updateStatusTC: (status: string) => void
 }
 
 function Profile(props: profileType) {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC}/>
             <MyPostsContainer/>
         </div>
     )

@@ -1,5 +1,5 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
-import profileReducer, {addPostACType} from "./profile-reducer";
+import profileReducer, {addPostACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
     followActionType, followingIsProgressType,
@@ -26,7 +26,8 @@ export type actionsType =
     setIsFetchingType |
     setUserProfileType |
     setUserDataType |
-    followingIsProgressType
+    followingIsProgressType |
+    ReturnType<typeof setStatusAC>
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'
@@ -75,16 +76,13 @@ export type profilePageType = {
     posts: Array<postsType>
     newPostText: string
     profile: any
+    status: string
 }
 export type dialogPageType = {
     dialogs: Array<dialogsType>
     messages: Array<messagesType>
     newMessageBody: string
 }
-// export type authLogin = {
-//     auth: setUserDataType
-// }
-
 
 const reducers = combineReducers({
     profilePage: profileReducer,

@@ -28,7 +28,7 @@ export type UnFollowActionType = {
 }
 export type setCurrentPageType = {
     type: 'SET-CURRENT-PAGE'
-    pageNumber: number
+    currentPage: number
 }
 export type setUsersTotalCountType = {
     type: 'SET-USERS-TOTAL-COUNT'
@@ -89,8 +89,7 @@ export const usersReducer = (state: stateType = initialState, action: actionsTyp
             return {...state, users: action.users}
         }
         case SET_CURRENT_PAGE: {
-            debugger
-            return {...state, currentPage: action.pageNumber}
+            return {...state, currentPage: action.currentPage}
         }
         case SET_USERS_TOTAL_COUNT: {
             return {...state, totalUsersCount: action.count}
@@ -120,8 +119,8 @@ export const unFollowSuccess = (userId: number): UnFollowActionType => {
 export const setUsers = (users: Array<userType>): setUsersActionType => {
     return {type: SET_USERS, users}
 }
-export const setCurrentPage = (pageNumber: number): setCurrentPageType => {
-    return {type: SET_CURRENT_PAGE, pageNumber}
+export const setCurrentPage = (currentPage: number): setCurrentPageType => {
+    return {type: SET_CURRENT_PAGE, currentPage}
 }
 export const setUsersTotalCount = (totalCount: number): setUsersTotalCountType => {
     return {type: SET_USERS_TOTAL_COUNT, count: totalCount}

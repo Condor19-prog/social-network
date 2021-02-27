@@ -42,7 +42,6 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
                 followTC={props.followTC}
                 unFollowTC={props.unFollowTC}
                 followingIsProgress={props.followingIsProgress}
-                setCurrentPage={props.setCurrentPage}
                 currentPage={props.currentPage}
                 pageSize={props.pageSize}
                 totalUsersCount={props.totalUsersCount}
