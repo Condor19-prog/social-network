@@ -89,6 +89,7 @@ export const usersReducer = (state: stateType = initialState, action: actionsTyp
             return {...state, users: action.users}
         }
         case SET_CURRENT_PAGE: {
+            debugger
             return {...state, currentPage: action.pageNumber}
         }
         case SET_USERS_TOTAL_COUNT: {

@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./users.module.css";
-import {unFollowTC, userType} from "../../Redux/users-reducer";
+import {userType} from "../../Redux/users-reducer";
 import userPhoto from "../../assets/photo/user-male.png";
 import Preloader from "../Common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
@@ -26,11 +26,11 @@ const Users = (props: usersPropsType) => {
         pages.push(i)
     }
 
-
     return (
         <div>
             <div className={s.page}>
                 {pages.map((p, i) => {
+
                     return <span key={i} className={props.currentPage === p ? s.selectedPages : ''}
                                  onClick={() => props.onPageChanged(p)}>{p}</span>
                 })}

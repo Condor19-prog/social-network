@@ -1,9 +1,10 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {profilePageType} from "../../Redux/redux-store";
 
 type profileType = {
-    profile: any
+    profile: profilePageType | null
 }
 
 function Profile(props: profileType) {
