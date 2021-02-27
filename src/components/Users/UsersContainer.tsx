@@ -10,6 +10,7 @@ import {
 } from "../../Redux/users-reducer";
 import Users from "./Users";
 import {withAuthRedirect} from "../../hok/withAuthRedirect";
+import {compose} from "redux";
 
 type usersAPIComponentPropsType = {
     users: Array<userType>
@@ -87,7 +88,8 @@ const mapStateToProps = (state: RootState) => {
 //     }
 // }
 
-export default withAuthRedirect(connect(mapStateToProps, {
+
+export default compose(withAuthRedirect, connect(mapStateToProps, {
         followSuccess, unFollowSuccess, setCurrentPage, toggleIsFollowingProgress, getUsersTC, followTC, unFollowTC
     }
-)(UsersContainer))
+))(UsersContainer)

@@ -15,7 +15,9 @@ function App() {
             <HeaderContainer/>
             <Navbar/>
             <div className={s.appWrapperContent}>
+                {/*@ts-ignore*/}
                 <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                {/*@ts-ignore*/}
                 <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
                 <Route path='/Users' render={() => <UsersContainer/>}/>
                 <Route path='/Login' render={() => <Login/>}/>
