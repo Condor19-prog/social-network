@@ -9,6 +9,7 @@ import {
     userType
 } from "../../Redux/users-reducer";
 import Users from "./Users";
+import {withAuthRedirect} from "../../hok/withAuthRedirect";
 
 type usersAPIComponentPropsType = {
     users: Array<userType>
@@ -62,6 +63,7 @@ const mapStateToProps = (state: RootState) => {
         followingIsProgress: state.usersPage.followingIsProgress
     }
 }
+// let withRedirect = withAuthRedirect(UsersContainer)
 // const mapDispatchToProps = (dispatch: Dispatch<actionsType>) => {
 //     return {
 //         follow: (userId: string) => {
@@ -85,7 +87,7 @@ const mapStateToProps = (state: RootState) => {
 //     }
 // }
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
         followSuccess, unFollowSuccess, setCurrentPage, toggleIsFollowingProgress, getUsersTC, followTC, unFollowTC
     }
-)(UsersContainer)
+)(UsersContainer))

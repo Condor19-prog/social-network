@@ -3,19 +3,15 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
-// type initialStateType = {
-//     userId: number | null
-//     email: number | null,
-//     login: null | string,
-//     isAuth: boolean | never
-//}
+
 const initialState = {
-    userId: null,
-    email: null,
+    userId: null as number | null,
+    email: null as string | null,
     login: null as null | string,
     isAuth: false
 }
-export const authReducer = (state = initialState, action: actionsType) => {
+type initialStateType = typeof initialState
+export const authReducer = (state = initialState, action: actionsType): initialStateType => {
     switch (action.type) {
         case SET_USER_DATA: {
             return {
