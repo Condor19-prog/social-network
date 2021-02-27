@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {getUserProfile, setUserProfile} from "../../Redux/profile-reducer";
 import {RootState} from "../../Redux/redux-store";
 import {withRouter} from "react-router";
-import {withAuthRedirect} from "../../hok/withAuthRedirect";
 import {compose} from "redux";
 
 type mapStateToPropsType = {
@@ -38,4 +37,4 @@ const mapStateToProps = (state: RootState) => ({
     profile: state.profilePage.profile
 })
 export default compose(connect(mapStateToProps, {setUserProfile, getUserProfile}),
-    withRouter, withAuthRedirect)(ProfileContainer)
+    withRouter)(ProfileContainer)
