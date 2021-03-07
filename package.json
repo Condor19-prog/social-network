@@ -30,7 +30,7 @@
     "uuid": "^8.3.1",
     "web-vitals": "^0.2.4"
   },
-  "homepage": "https://condor19-prog.github.io/socialNetwork",
+  "homepage": "https://condor19-prog.github.io/social-network",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
