@@ -16,7 +16,6 @@ import { reducer as formReducer } from 'redux-form'
 export type actionsType =
     addPostActionType |
     updateNewPostTextType |
-    updateNewMessageBodyType |
     sendMessageType |
     addPostACType |
     followActionType |
@@ -44,14 +43,11 @@ export type setUserProfileType = {
 }
 export type sendMessageType = {
     type: 'SEND-MESSAGE'
-}
-export type updateNewMessageBodyType = {
-    type: 'UPDATE-NEW-MESSAGE-BODY'
-    messageBody: string
+    newMessageBody: any
 }
 export type addPostActionType = {
     type: 'ADD-POST'
-
+    newPostText: string
 }
 export type updateNewPostTextType = {
     type: 'UPDATE-NEW-POST-TEXT'
@@ -75,14 +71,12 @@ export type dialogsType = {
 
 export type profilePageType = {
     posts: Array<postsType>
-    newPostText: string
     profile: any
     status: string
 }
 export type dialogPageType = {
     dialogs: Array<dialogsType>
     messages: Array<messagesType>
-    newMessageBody: string
 }
 
 const reducers = combineReducers({

@@ -5,13 +5,11 @@ import {
     postsType,
     profilePageType,
     setUserProfileType,
-    updateNewPostTextType
 } from "./redux-store";
 import {Dispatch} from "redux";
 import {ProfileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 
@@ -20,7 +18,6 @@ const initialState: profilePageType = {
         {id: v1(), message: 'Bonjour', likesCount: 12},
         {id: v1(), message: 'Когда вернешь долг?', likesCount: 100000}
     ],
-    newPostText: '',
     profile: null,
     status: ''
 }
@@ -31,23 +28,16 @@ const profileReducer = (state = initialState, action: actionsType): profilePageT
         case ADD_POST: {
             const newPost: postsType = {
                 id: v1(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
-            if (state.newPostText === '') {
+            if (action.newPostText === '') {
                 alert('введи что нить')
                 return state
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ''
-            }
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
             }
         }
         case SET_USER_PROFILE: {
@@ -60,14 +50,8 @@ const profileReducer = (state = initialState, action: actionsType): profilePageT
             return state
     }
 }
-export const addPostAC = (): addPostActionType => {
-    return {type: "ADD-POST"}
-}
-export const updateNewPostAC = (text: string): updateNewPostTextType => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    }
+export const addPostAC = (newPostText: string): addPostActionType => {
+    return {type: "ADD-POST", newPostText}
 }
 export const setStatusAC = (status: string) => {
     return ({type: SET_STATUS, status} as const)
