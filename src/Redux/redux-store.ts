@@ -11,7 +11,7 @@ import usersReducer, {
 } from "./users-reducer";
 import {authReducer} from "./auth-reducer";
 import thunk from "redux-thunk";
-import { reducer as formReducer } from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 
 export type actionsType =
     addPostActionType |
@@ -31,10 +31,11 @@ export type actionsType =
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'
-    data: {
-        userId: number
-        email: string
+    payload: {
+        userId: number | null
+        email: string | null
         login: string | null
+        isAuth: boolean
     }
 }
 export type setUserProfileType = {
