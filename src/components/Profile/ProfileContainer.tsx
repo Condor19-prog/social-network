@@ -7,11 +7,6 @@ import {withRouter} from "react-router";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hok/withAuthRedirect";
 
-// type mapDispatchToPropsType = {
-//     setUserProfile: (profile: any) => void
-//     getUserProfile: (userId: number) => void
-// }
-
 class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {

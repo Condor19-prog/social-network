@@ -144,12 +144,14 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
 }
 export const followTC = (userId: number) => {
     return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetching(true))
         dispatch(toggleIsFollowingProgress(true, userId))
         usersAPI.follow(userId)
             .then(response => {
                     if (response.data.resultCode === 0) {
                         dispatch(followSuccess(userId))
                     }
+                dispatch(toggleIsFetching(false))
                     dispatch(toggleIsFollowingProgress(false, userId))
                 }
             )
