@@ -8,8 +8,11 @@ import {requiredField} from "../../utils/validators/validator";
 import {rootStateType} from "../../Redux/redux-store";
 import s from '../Common/FormsControls/FormsControl.module.css'
 
+type loginType = {
+    isAuth: boolean
+}
 
-const Login = (props: any) => {
+const Login = (props: loginType) => {
     const dispatch = useDispatch()
 
     const onSubmit = (formData: formDataType) => {
