@@ -2,12 +2,11 @@ import {v1} from "uuid";
 import {
     actionsType,
     addPostActionType,
-    postsType,
-    profilePageType,
     setUserProfileType,
 } from "./redux-store";
 import {Dispatch} from "redux";
 import {ProfileAPI, usersAPI} from "../api/api";
+import {postsType, profilePageType, profileType} from "../types/types";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
@@ -18,8 +17,8 @@ const initialState: profilePageType = {
         {id: v1(), message: 'Bonjour', likesCount: 12},
         {id: v1(), message: 'Когда вернешь долг?', likesCount: 100000}
     ],
-    profile: null,
-    status: ''
+    profile: null as profileType | null,
+    status: 'Hi! i am React JS Junior developer and I am looking for a job'
 }
 
 const profileReducer = (state = initialState, action: actionsType): profilePageType => {
@@ -72,11 +71,11 @@ export const getStatusTC = (userId: number) =>
             dispatch(setStatusAC(response.data))
         })
     }
-    export const updateStatusTC = (status: string) =>
+export const updateStatusTC = (status: string) =>
     (dispatch: Dispatch) => {
         ProfileAPI.updateStatus(status).then(response => {
-            if(response.data.resultCode === 0)
-            dispatch(setStatusAC(status))
+            if (response.data.resultCode === 0)
+                dispatch(setStatusAC(status))
         })
     }
 

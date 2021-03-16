@@ -5,7 +5,7 @@ import {Redirect} from "react-router-dom";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../Common/FormsControls/FormsControls";
 import {requiredField} from "../../utils/validators/validator";
-import {RootState} from "../../Redux/redux-store";
+import {rootStateType} from "../../Redux/redux-store";
 import s from '../Common/FormsControls/FormsControl.module.css'
 
 
@@ -25,7 +25,7 @@ const Login = (props: any) => {
         </div>
     )
 }
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: rootStateType) => ({
     isAuth: state.auth.isAuth
 })
 export default connect(mapStateToProps, {loginTC})(Login)

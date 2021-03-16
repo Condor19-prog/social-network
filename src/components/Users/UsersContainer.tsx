@@ -1,28 +1,40 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
-import {RootState} from "../../Redux/redux-store";
+import {rootStateType} from "../../Redux/redux-store";
 import {
     followSuccess, followTC, getUsersTC,
-    setCurrentPage,
-    toggleIsFollowingProgress,
+    toggleInFollowingProgress,
     unFollowSuccess, unFollowTC,
-    userType
 } from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
+import {userType} from "../../types/types";
+import {
+    followingInProgress,
+    getCurrentPage,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../Redux/users-selector";
 
-type usersAPIComponentPropsType = {
+type mapStateToPropsType = {
     users: Array<userType>
-    unFollowTC: (userId: number) => void
-    followTC: (userId: number) => void
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    setCurrentPage: (pageNumber: number) => void
     isFetching: boolean
-    followingIsProgress: any
-    toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
+    followingInProgress: number[]
 }
+type mapDispatchToPropsType = {
+    unFollowTC: (userId: number) => void
+    followTC: (userId: number) => void
+}
+type ownPropsType = {
+    //свои пропсы какие то
+}
+type usersAPIComponentPropsType = mapStateToPropsType & mapDispatchToPropsType & ownPropsType
+
 
 const UsersContainer = (props: usersAPIComponentPropsType) => {
     const dispatch = useDispatch()
@@ -41,7 +53,7 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
                 users={props.users}
                 followTC={props.followTC}
                 unFollowTC={props.unFollowTC}
-                followingIsProgress={props.followingIsProgress}
+                followingInProgress={props.followingInProgress}
                 currentPage={props.currentPage}
                 pageSize={props.pageSize}
                 totalUsersCount={props.totalUsersCount}
@@ -52,14 +64,14 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
     )
 }
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: rootStateType): mapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingIsProgress: state.usersPage.followingIsProgress,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: followingInProgress(state),
     }
 }
 // let withRedirect = withAuthRedirect(UsersContainer)
@@ -87,7 +99,7 @@ const mapStateToProps = (state: RootState) => {
 // }
 
 
-export default compose(connect(mapStateToProps, {
-        followSuccess, unFollowSuccess, setCurrentPage, toggleIsFollowingProgress, getUsersTC, followTC, unFollowTC
+export default compose(connect<mapStateToPropsType, mapDispatchToPropsType, ownPropsType, rootStateType>(mapStateToProps, {
+        followTC, unFollowTC
     }
 ))(UsersContainer)

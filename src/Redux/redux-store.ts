@@ -2,7 +2,7 @@ import {combineReducers, createStore, applyMiddleware} from "redux";
 import profileReducer, {addPostACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
-    followActionType, followingIsProgressType,
+    followActionType, followingInProgressType,
     setCurrentPageType,
     setIsFetchingType,
     setUsersActionType,
@@ -27,7 +27,7 @@ export type actionsType =
     setIsFetchingType |
     setUserProfileType |
     setUserDataType |
-    followingIsProgressType |
+    followingInProgressType |
     ReturnType<typeof setStatusAC> |
     setInitializedSuccessAction
 
@@ -57,12 +57,6 @@ export type updateNewPostTextType = {
     newText: string
 }
 
-
-export type postsType = {
-    id: string
-    message: string
-    likesCount: number
-}
 export type messagesType = {
     id: string
     message: string
@@ -72,11 +66,7 @@ export type dialogsType = {
     name: string
 }
 
-export type profilePageType = {
-    posts: Array<postsType>
-    profile: any
-    status: string
-}
+
 export type dialogPageType = {
     dialogs: Array<dialogsType>
     messages: Array<messagesType>
@@ -91,7 +81,7 @@ const reducers = combineReducers({
     app: appReducer
 })
 
-export type RootState = ReturnType<typeof reducers>
+export type rootStateType = ReturnType<typeof reducers>
 
 let store = createStore(reducers, applyMiddleware(thunk))
 //@ts-ignore

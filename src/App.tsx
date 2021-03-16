@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 import {initializeAppTC} from "./Redux/app-reducer";
-import {RootState} from "./Redux/redux-store";
+import {rootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
 
 type appType = {
@@ -38,7 +38,7 @@ class App extends React.Component<appType> {
                     <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
                     {/*@ts-ignore*/}
                     <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/Users' render={() => <UsersContainer/>}/>
+                    <Route path='/Users' render={() => <UsersContainer />}/>
                     <Route path='/Login' render={() => <Login/>}/>
                 </div>
             </div>
@@ -46,7 +46,7 @@ class App extends React.Component<appType> {
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: rootStateType) => ({
     initialized: state.app.initialized
 })
 export default compose<any>(

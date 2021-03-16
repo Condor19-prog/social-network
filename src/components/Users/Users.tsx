@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./users.module.css";
-import {userType} from "../../Redux/users-reducer";
 import userPhoto from "../../assets/photo/user-male.png";
 import Preloader from "../Common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
+import {userType} from "../../types/types";
 
 type usersPropsType = {
     users: Array<userType>
@@ -14,7 +14,7 @@ type usersPropsType = {
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     isFetching: boolean
-    followingIsProgress: any
+    followingInProgress: number[]
 }
 
 const Users = (props: usersPropsType) => {
@@ -46,9 +46,9 @@ const Users = (props: usersPropsType) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.followingIsProgress.some((id: number) => id === u.id)}
+                            ? <button disabled={props.followingInProgress.some((id: number) => id === u.id)}
                                       onClick={() => props.unFollowTC(u.id)}>Unfollow</button>
-                            : <button disabled={props.followingIsProgress.some((id: number) => id === u.id)}
+                            : <button disabled={props.followingInProgress.some((id: number) => id === u.id)}
                                       onClick={() => props.followTC(u.id)}>Follow</button>
                         }
                     </div>

@@ -1,8 +1,8 @@
 import React from "react";
 import s from './users.module.css'
-import {userType} from "../../Redux/users-reducer";
 import axios from 'axios';
 import userPhoto from '../../assets/photo/user-male.png'
+import {userType} from "../../types/types";
 
 class UsersC extends React.Component<any, any> {
 
