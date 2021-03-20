@@ -1,11 +1,7 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
 import {rootStateType} from "../../Redux/redux-store";
-import {
-    followSuccess, followTC, getUsersTC,
-    toggleInFollowingProgress,
-    unFollowSuccess, unFollowTC,
-} from "../../Redux/users-reducer";
+import {followTC, getUsersTC, unFollowTC,} from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
 import {userType} from "../../types/types";
@@ -67,6 +63,7 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
 const mapStateToProps = (state: rootStateType): mapStateToPropsType => {
     return {
         users: getUsers(state),
+        // users: getUsers(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
