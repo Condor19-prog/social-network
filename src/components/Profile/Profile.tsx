@@ -5,13 +5,12 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 type profileType = {
     profile: any
     status: string
-    updateStatusTC: (status: string) => void
 }
 
 function Profile(props: profileType) {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC}/>
+            <ProfileInfo profile={props.profile} status={props.status}/>
             <MyPostsContainer/>
         </div>
     )

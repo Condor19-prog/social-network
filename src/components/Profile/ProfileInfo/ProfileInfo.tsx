@@ -1,13 +1,12 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
 type profileInfoType = {
     profile: any
     status: string
-    updateStatusTC: (status: string) => void
 }
 
 function ProfileInfo(props: profileInfoType) {
@@ -22,7 +21,7 @@ function ProfileInfo(props: profileInfoType) {
             </div>
             <div className={s.discriptionBlock}>
                 <img src={props.profile.photos.large} alt="profile"/>
-                <ProfileStatus status={props.status} updateStatusTC={props.updateStatusTC}/>
+                <ProfileStatusWithHooks status={props.status}/>
             </div>
         </div>
     )

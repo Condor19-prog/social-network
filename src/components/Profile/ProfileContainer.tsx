@@ -22,7 +22,6 @@ class ProfileContainer extends React.Component<any, any> {
         return (
             <div>
                 <Profile {...this.props} profile={this.props.profile} status={this.props.status}
-                         updateStatusTC={this.props.updateStatusTC}
                 />
             </div>
         )
@@ -39,6 +38,5 @@ export default compose(withAuthRedirect, connect(mapStateToProps, {
         setUserProfile,
         getUserProfile,
         getStatusTC,
-        updateStatusTC
     }),
     withRouter)(ProfileContainer)
