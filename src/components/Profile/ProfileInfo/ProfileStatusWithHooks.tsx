@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {updateStatusTC} from "../../../Redux/profile-reducer";
 
@@ -10,7 +10,9 @@ const ProfileStatusWithHooks: React.FC<profileStatusType> = ({status}) => {
     const dispatch = useDispatch()
     const [editMode, setEditMode] = useState(false)
     const [value, setValue] = useState(status)
-
+    useEffect(() => {
+        setValue(status)
+    },[status])
     const activateMode = () => {
         setEditMode(true)
     }
