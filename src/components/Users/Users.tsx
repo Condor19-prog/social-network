@@ -1,70 +1,38 @@
 import React from "react";
-import s from "./users.module.css";
-import userPhoto from "../../assets/photo/user-male.png";
 import Preloader from "../Common/Preloader/Preloader";
-import {NavLink} from "react-router-dom";
 import {userType} from "../../types/types";
+import Paginator from "../Common/Paginator/Paginator";
+import User from "./User";
 
 type usersPropsType = {
     users: Array<userType>
-    unFollowTC: (userId: number) => void
-    followTC: (userId: number) => void
+    isFetching: boolean
+    followingInProgress: number[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    isFetching: boolean
-    followingInProgress: number[]
+    followTC: (userId: number) => void
+    unFollowTC: (userId: number) => void
 }
 
-const Users = (props: usersPropsType) => {
-
-    let pageCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    const pages = []
-    for (let i = 1; i <= pageCount; i++) {
-        pages.push(i)
-    }
+const Users: React.FC<usersPropsType> = ({
+                                             users, isFetching, followingInProgress, pageSize,
+                                             totalUsersCount, currentPage, onPageChanged, followTC, unFollowTC
+                                         }) => {
 
     return (
         <div>
-            <div className={s.page}>
-                {pages.map((p, i) => {
-
-                    return <span key={i} className={props.currentPage === p ? s.selectedPages : ''}
-                                 onClick={() => props.onPageChanged(p)}>{p}</span>
-                })}
-            </div>
-            {props.isFetching ? <Preloader/> : null}
+            <Paginator pageSize={pageSize} totalUsersCount={totalUsersCount} currentPage={currentPage}
+                       onPageChanged={onPageChanged} isFetching={isFetching}
+            />
+            {isFetching ? <Preloader/> : null}
             {
-                props.users.map((u: userType) => <div className={s.users} key={u.id}>
-                <span>
-                    <div>
-                        <NavLink to={`/Profile/${u.id}`}>
-                        <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPhoto}
-                             alt={'small'}/>
-                             </NavLink>
-                    </div>
-                    <div>
-                        {u.followed
-                            ? <button disabled={props.followingInProgress.some((id: number) => id === u.id)}
-                                      onClick={() => props.unFollowTC(u.id)}>Unfollow</button>
-                            : <button disabled={props.followingInProgress.some((id: number) => id === u.id)}
-                                      onClick={() => props.followTC(u.id)}>Follow</button>
-                        }
-                    </div>
-                </span>
-                        <span>
-                        <span>
-                            <div>{u.name}</div>
-                            <div>{u.status}</div>
-                         </span>
-                    <span>
-                        <div>
-
-                        </div>
-                    </span>
-                </span>
-                    </div>
+                users.map(u => <User key={u.id}
+                                     user={u}
+                                     followingInProgress={followingInProgress}
+                                     followTC={followTC}
+                                     unFollowTC={unFollowTC}/>
                 )
             }
         </div>

@@ -39,6 +39,9 @@ const profileReducer = (state = initialState, action: actionsType): profilePageT
                 posts: [...state.posts, newPost],
             }
         }
+        case "DELETE-POST": {
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
@@ -52,33 +55,31 @@ const profileReducer = (state = initialState, action: actionsType): profilePageT
 export const addPostAC = (newPostText: string): addPostActionType => {
     return {type: "ADD-POST", newPostText}
 }
+export const deletePostAC = (postId: string) => {
+    return ({type: "DELETE-POST", postId} as const)
+}
 export const setStatusAC = (status: string) => {
     return ({type: SET_STATUS, status} as const)
 }
 
 export const setUserProfile = (profile: null): setUserProfileType => ({type: SET_USER_PROFILE, profile})
 
-export const getUserProfile = (userId: number) =>
-    (dispatch: Dispatch) => {
-        usersAPI.getProfile(userId).then(response => {
-            dispatch(setUserProfile(response.data))
-        })
-    }
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    const response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data))
+}
 
-export const getStatusTC = (userId: number) =>
-    (dispatch: Dispatch) => {
-        ProfileAPI.getStatus(userId).then(response => {
-            dispatch(setStatusAC(response.data))
-        })
-    }
-export const updateStatusTC = (status: string) =>
-    (dispatch: Dispatch) => {
-        ProfileAPI.updateStatus(status).then(response => {
-            if (response.data.resultCode === 0)
-                dispatch(setStatusAC(status))
-        })
-    }
+export const getStatusTC = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await ProfileAPI.getStatus(userId)
+    dispatch(setStatusAC(response.data))
+}
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+    let response = await ProfileAPI.updateStatus(status)
+    if (response.data.resultCode === 0)
+        dispatch(setStatusAC(status))
+}
 
 export type addPostACType = ReturnType<typeof addPostAC>;
+export type deletePostACType = ReturnType<typeof deletePostAC>;
 
 export default profileReducer

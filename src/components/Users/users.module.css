@@ -3,20 +3,6 @@
     height: 70px;
 }
 
-.selectedPages {
-    font-weight: bold;
-    color: #9700c6;
-    margin: 5px;
-}
-
-.page {
-    margin-left: 15px;
-    padding: 5px;
-}
-
-.page:hover {
-    cursor: pointer;
-}
 .users{
     margin-left: 20px;
 }

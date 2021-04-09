@@ -1,0 +1,13 @@
+.page {
+    margin-left: 15px;
+    padding: 5px;
+}
+.selectedPages {
+    font-weight: bold;
+    color: #9700c6;
+    margin: 5px;
+}
+
+.page:hover {
+    cursor: pointer;
+}

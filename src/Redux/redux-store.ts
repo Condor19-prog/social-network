@@ -1,5 +1,5 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
-import profileReducer, {addPostACType, setStatusAC} from "./profile-reducer";
+import profileReducer, {addPostACType, deletePostACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
     followActionType, followingInProgressType,
@@ -29,7 +29,8 @@ export type actionsType =
     setUserDataType |
     followingInProgressType |
     ReturnType<typeof setStatusAC> |
-    setInitializedSuccessAction
+    setInitializedSuccessAction |
+    deletePostACType
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'
@@ -85,5 +86,5 @@ export type rootStateType = ReturnType<typeof reducers>
 
 let store = createStore(reducers, applyMiddleware(thunk))
 //@ts-ignore
-window.store = store
+window.store = store.getState()
 export default store
