@@ -10,13 +10,12 @@ import {withAuthRedirect} from "../../hok/withAuthRedirect";
 class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {
-        const {match, authorizedUserId, getStatusTC} = this.props
-        let userId: number = match.params.userId
+        let userId: number = this.props.match.params.userId
         if (!userId) {
-            userId = authorizedUserId
+            userId = this.props.authorizedUserId
         }
-        getUserProfile(userId)
-        getStatusTC(userId)
+        this.props.getUserProfile(userId)
+        this.props.getStatusTC(userId)
     }
 
     render() {
