@@ -3,6 +3,7 @@ import Preloader from "../Common/Preloader/Preloader";
 import {userType} from "../../types/types";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
+import s from './users.module.css'
 
 type usersPropsType = {
     users: Array<userType>
@@ -22,8 +23,8 @@ const Users: React.FC<usersPropsType> = ({
                                          }) => {
 
     return (
-        <div>
-            <Paginator pageSize={pageSize} totalUsersCount={totalUsersCount} currentPage={currentPage}
+        <div className={s.users}>
+            <Paginator pageSize={pageSize} totalItemCount={totalUsersCount} currentPage={currentPage}
                        onPageChanged={onPageChanged} isFetching={isFetching}
             />
             {isFetching ? <Preloader/> : null}

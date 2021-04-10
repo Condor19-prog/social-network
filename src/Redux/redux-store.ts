@@ -1,4 +1,4 @@
-import {combineReducers, createStore, applyMiddleware} from "redux";
+import {combineReducers, createStore, applyMiddleware, compose} from "redux";
 import profileReducer, {addPostACType, deletePostACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
@@ -84,7 +84,17 @@ const reducers = combineReducers({
 
 export type rootStateType = ReturnType<typeof reducers>
 
-let store = createStore(reducers, applyMiddleware(thunk))
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+
+// let store = createStore(reducers, applyMiddleware(thunk))
+
 //@ts-ignore
-window.store = store.getState()
+window.__store__ = store.getState()
 export default store

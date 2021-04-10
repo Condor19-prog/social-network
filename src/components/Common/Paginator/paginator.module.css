@@ -1,13 +1,18 @@
-.page {
-    margin-left: 15px;
-    padding: 5px;
+.paginator {
+    margin: 10px;
+    position: relative;
+    top: 0;
+    left: 30%;
 }
-.selectedPages {
-    font-weight: bold;
-    color: #9700c6;
-    margin: 5px;
+.pageNumber {
+    padding: 2px 5px;
+    border: 1px solid grey;
+}
+.pageNumber:hover{
+    cursor: pointer;
 }
 
-.page:hover {
-    cursor: pointer;
+.pageNumber.selectedPage {
+    font-weight: bold;
+    border-color: black;
 }
