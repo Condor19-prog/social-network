@@ -9,7 +9,7 @@ export type profileType = {
     lookingForAJobDescription: string
     fullName: string
     contacts: contactsType
-    photos: photosType
+    photos: any
 }
 export  type photosType = {
     small: string | null
@@ -27,7 +27,8 @@ export  type contactsType = {
 }
 export  type profilePageType = {
     posts: Array<postsType>
-    profile: profileType | null
+    profile: any
+        // profileType | null
     status: string
 }
 export type userType = {

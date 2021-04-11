@@ -1,5 +1,5 @@
 import {combineReducers, createStore, applyMiddleware, compose} from "redux";
-import profileReducer, {addPostACType, deletePostACType, setStatusAC} from "./profile-reducer";
+import profileReducer, {addPostACType, deletePostACType, savePhotoSuccessACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer, {
     followActionType, followingInProgressType,
@@ -30,7 +30,8 @@ export type actionsType =
     followingInProgressType |
     ReturnType<typeof setStatusAC> |
     setInitializedSuccessAction |
-    deletePostACType
+    deletePostACType |
+    savePhotoSuccessACType
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'
