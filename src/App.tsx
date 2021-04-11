@@ -2,17 +2,19 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import s from './App.module.css'
 import Navbar from "./components/Navbar/Navbar";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 import {initializeAppTC} from "./Redux/app-reducer";
 import {rootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
+import {WithSuspense} from "./hok/WithSuspense";
+
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const Login = React.lazy(() => import("./components/Login/Login"));
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 
 type appType = {
     initialized: boolean
@@ -34,12 +36,14 @@ class App extends React.Component<appType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
+
                     {/*@ts-ignore*/}
-                    <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                    <Route exact path='/Profile/:userId?' render={WithSuspense(ProfileContainer)}/>
                     {/*@ts-ignore*/}
-                    <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/Users' render={() => <UsersContainer />}/>
-                    <Route path='/Login' render={() => <Login/>}/>
+                    <Route path='/Dialogs' render={WithSuspense(DialogsContainer)}/>
+                    <Route path='/Users' render={() => <UsersContainer/>}/>
+                    <Route path='/Login' render={() => WithSuspense(Login)}/>
+
                 </div>
             </div>
         );

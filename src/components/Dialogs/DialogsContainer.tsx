@@ -20,7 +20,7 @@ const mapDispatchTpProps = (dispatch: Dispatch<actionsType>) => {
     }
 }
 
-export default compose(connect(
+export default compose<any>(connect(
     mapStateToProps, mapDispatchTpProps),
     withAuthRedirect)
 (Dialogs)

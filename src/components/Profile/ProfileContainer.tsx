@@ -34,7 +34,7 @@ const mapStateToProps = (state: rootStateType) => ({
     authorizedUserId: state.auth.userId,
     isAuth: state.auth.isAuth
 })
-export default compose(withAuthRedirect, connect(mapStateToProps, {
+export default compose<any>(withAuthRedirect, connect(mapStateToProps, {
         setUserProfile,
         getUserProfile,
         getStatusTC,

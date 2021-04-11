@@ -24,6 +24,7 @@ export const setInitializedSuccessAC = () => ({type: SET_INITIALIZED_SUCCESS} as
 
 export const initializeAppTC = () => (dispatch: any) => {
     let promise = dispatch(getAuthUserDataTC())
+
     Promise.all([promise])
         .then(() => {
             dispatch(setInitializedSuccessAC())

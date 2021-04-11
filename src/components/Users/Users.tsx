@@ -25,7 +25,7 @@ const Users: React.FC<usersPropsType> = ({
     return (
         <div className={s.users}>
             <Paginator pageSize={pageSize} totalItemCount={totalUsersCount} currentPage={currentPage}
-                       onPageChanged={onPageChanged} isFetching={isFetching}
+                       onPageChanged={onPageChanged}
             />
             {isFetching ? <Preloader/> : null}
             {
