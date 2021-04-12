@@ -26,9 +26,7 @@ const ProfileStatusWithHooks: React.FC<profileStatusType> = ({status}) => {
 
     return (
         <div>
-            {
-                !editMode &&
-                <div><span onDoubleClick={activateMode}>{status || 'НЕТ СТАТУСА!!!!!!'}</span></div>
+           {!editMode && <div><b>Status: </b><span onDoubleClick={activateMode}>{status || 'НЕТ СТАТУСА!!!!!!'}</span></div>
             }
             {
                 editMode &&

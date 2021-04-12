@@ -29,6 +29,7 @@ export  type profilePageType = {
     posts: Array<postsType>
     profile: any
         // profileType | null
+    // contacts: contactsType
     status: string
 }
 export type userType = {

@@ -21,7 +21,18 @@ const initialState: profilePageType = {
     profile: {
         photos: {}
     },
-    status: 'Hi! i am React JS Junior developer and I am looking for a job'
+    status: 'Hi! i am React JS Junior developer and I am looking for a job',
+    // contacts: {
+    //     github: 'null',
+    //     vk: 'null',
+    //     facebook: 'null',
+    //     instagram: 'null',
+    //     twitter: 'null',
+    //     website: 'null',
+    //     youtube: 'null',
+    //     mainLink: 'null',
+    // }
+
 }
 
 const profileReducer = (state = initialState, action: actionsType): profilePageType => {
