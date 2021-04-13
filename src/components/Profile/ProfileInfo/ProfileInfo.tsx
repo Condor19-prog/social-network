@@ -3,17 +3,19 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/photo/user-male.png';
-import {Form} from "redux-form";
-import {ProfileDataForm} from "./ProfileDataForm";
+import ProfileDataFormReduxForm from "./ProfileDataForm";
+
 
 type profileInfoType = {
     profile: any
     status: string
     isOwner: boolean
     savePhoto: any
+    saveProfile: any
 }
 
 function ProfileInfo(props: profileInfoType) {
+
     const [editMode, setEditMode] = useState(false)
 
     if (!props.profile) {
@@ -24,15 +26,24 @@ function ProfileInfo(props: profileInfoType) {
             props.savePhoto(e.target.files[0])
         }
     }
+    const onSubmit = (formData: any) => {
+        debugger
+        props.saveProfile(formData)
+            .then(() => {
+                setEditMode(false)
+            })
+    }
     return (
         <div>
             <div className={s.discriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} alt="profile" className={s.namePhoto}/><br/>
                 {props.isOwner && <input type={'file'} onChange={onMainPhotoSelect}/>}
                 {
-                    editMode ? <ProfileDataForm profile={props.profile}/> :
-                    <ProfileData profile={props.profile} isOwner={props.isOwner}
-                                 goToEditMode={() => setEditMode(true)}/>
+                    editMode ?
+                        <ProfileDataFormReduxForm initialValues={props.profile} profile={props.profile}
+                                                  onSubmit={onSubmit}/>
+                        : <ProfileData profile={props.profile} isOwner={props.isOwner}
+                                       goToEditMode={() => setEditMode(true)}/>
                 }
 
                 <ProfileStatusWithHooks status={props.status}/>
@@ -48,6 +59,7 @@ type profileDataType = {
 }
 const ProfileData = (props: profileDataType) => {
     const {profile} = props
+
     return (
         <div>
             {props.isOwner &&
