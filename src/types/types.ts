@@ -3,14 +3,7 @@ export type postsType = {
     message: string
     likesCount: number
 }
-export type profileType = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: contactsType
-    photos: any
-}
+
 export  type photosType = {
     small: string | null
     large: string | null
@@ -25,12 +18,14 @@ export  type contactsType = {
     youtube: string
     mainLink: string
 }
-export  type profilePageType = {
-    posts: Array<postsType>
-    profile: any
-        // profileType | null
-    // contacts: contactsType
-    status: string
+export type profileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: contactsType
+    photos: photosType
+    aboutMe: string
 }
 export type userType = {
     id: number

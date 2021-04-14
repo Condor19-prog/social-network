@@ -84,6 +84,7 @@ const reducers = combineReducers({
 })
 
 export type rootStateType = ReturnType<typeof reducers>
+export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 
 declare global {
     interface Window {

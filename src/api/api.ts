@@ -1,4 +1,5 @@
 import axios from "axios";
+import {profileType} from "../types/types";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -34,7 +35,7 @@ export const ProfileAPI = {
     updateStatus(status: string) {
         return instance.put(`profile/status`, {status})
     },
-    savePhoto(photoFile: string) {
+    savePhoto(photoFile: File) {
         const formData = new FormData()
         formData.append('image', photoFile)
         return instance.put(`profile/photo`, formData, {
@@ -43,9 +44,8 @@ export const ProfileAPI = {
             }
         })
     },
-    saveProfile(profile: any){
-        debugger
-        return instance.put('profile', {profile})
+    saveProfile(profile: profileType){
+        return instance.put('profile', profile)
     }
 }
 export const authAPI = {
@@ -58,4 +58,13 @@ export const authAPI = {
     logOut() {
         return instance.delete(`auth/login`)
     }
+}
+export enum ResultCodesEnum {
+    Success = 0,
+    Error = 1
+}
+export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
 }

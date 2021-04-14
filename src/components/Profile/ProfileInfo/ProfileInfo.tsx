@@ -4,31 +4,40 @@ import Preloader from "../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/photo/user-male.png';
 import ProfileDataFormReduxForm from "./ProfileDataForm";
+import {contactsType, profileType} from "../../../types/types";
 
 
-type profileInfoType = {
-    profile: any
+type profileInfoPropsType = {
+    profile: profileType | null
     status: string
     isOwner: boolean
-    savePhoto: any
-    saveProfile: any
+    savePhoto: (file: File) => void
+    saveProfile: (profile: profileType) => Promise<any>
+    updateStatus: (status: string) => void
 }
 
-function ProfileInfo(props: profileInfoType) {
+const ProfileInfo: React.FC<profileInfoPropsType> = ({
+                                                         profile,
+                                                         status,
+                                                         isOwner,
+                                                         savePhoto,
+                                                         saveProfile,
+                                                         updateStatus
+                                                     }) => {
 
     const [editMode, setEditMode] = useState(false)
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader/>
     }
     const onMainPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            props.savePhoto(e.target.files[0])
+            savePhoto(e.target.files[0])
         }
     }
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: profileType) => {
         debugger
-        props.saveProfile(formData)
+        saveProfile(formData)
             .then(() => {
                 setEditMode(false)
             })
@@ -36,24 +45,26 @@ function ProfileInfo(props: profileInfoType) {
     return (
         <div>
             <div className={s.discriptionBlock}>
-                <img src={props.profile.photos.large || userPhoto} alt="profile" className={s.namePhoto}/><br/>
-                {props.isOwner && <input type={'file'} onChange={onMainPhotoSelect}/>}
+                <img src={profile.photos.large || userPhoto} alt="profile" className={s.namePhoto}/><br/>
+                {isOwner && <input type={'file'} onChange={onMainPhotoSelect}/>}
                 {
                     editMode ?
-                        <ProfileDataFormReduxForm initialValues={props.profile} profile={props.profile}
+                        <ProfileDataFormReduxForm initialValues={profile}
+                                                  profile={profile}
                                                   onSubmit={onSubmit}/>
-                        : <ProfileData profile={props.profile} isOwner={props.isOwner}
+                        : <ProfileData profile={profile}
+                                       isOwner={isOwner}
                                        goToEditMode={() => setEditMode(true)}/>
                 }
 
-                <ProfileStatusWithHooks status={props.status}/>
+                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             </div>
         </div>
     )
 }
 
 type profileDataType = {
-    profile: any
+    profile: profileType
     isOwner: boolean
     goToEditMode: () => void
 }
@@ -77,19 +88,20 @@ const ProfileData = (props: profileDataType) => {
                 <b>About me:</b> {profile.aboutMe}
             </div>
             <div>
-                <b>Contacts:</b> {profile.contacts && Object.keys(profile.contacts).map(key => {
-                return <Contacts key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+                <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
+                return <Contacts key={key} contactTitle={key}
+                                 contactValue={profile.contacts[key as keyof contactsType]}/>
             })}
             </div>
         </div>
     )
 }
 
-type contactsType = {
-    contactTitle: any
-    contactValue: any
+type contactsPropsType = {
+    contactTitle: string
+    contactValue: string
 }
-const Contacts = (props: contactsType) => {
+const Contacts = (props: contactsPropsType) => {
     return (
         <div style={{marginLeft: '20px'}}>
             <b>{props.contactTitle}</b>: <b>{props.contactValue}</b>
