@@ -6,12 +6,12 @@ type profileStatusType = {
 }
 
 const ProfileStatusWithHooks: React.FC<profileStatusType> = ({status, updateStatus}) => {
-
     const [editMode, setEditMode] = useState(false)
     const [value, setValue] = useState(status)
     useEffect(() => {
         setValue(status)
     }, [status])
+
     const activateMode = () => {
         setEditMode(true)
     }

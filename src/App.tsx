@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import s from './App.module.css'
 import Navbar from "./components/Navbar/Navbar";
 import UsersContainer from "./components/Users/UsersContainer";
@@ -22,8 +22,17 @@ type appType = {
 
 class App extends React.Component<any> {
 
+    catchAllUnhandledErrors = () => {
+        alert('Some error occurred')
+    }
+
     componentDidMount() {
         this.props.initializeAppTC()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -36,12 +45,13 @@ class App extends React.Component<any> {
                 <Navbar/>
                 <div className={s.appWrapperContent}>
                     <React.Suspense fallback={<Preloader/>}>
-                        {/*@ts-ignore*/}
-                        <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                        {/*@ts-ignore*/}
-                        <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                        <Route path='/Users' render={() => <UsersContainer/>}/>
-                        <Route path='/Login' render={() => <LoginPage/>}/>
+                        <Switch>
+                            <Route exact path='/' render={() => <Redirect to={'/Profile'}/>}/>
+                            <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                            <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
+                            <Route path='/Users' render={() => <UsersContainer/>}/>
+                            <Route path='/Login' render={() => <LoginPage/>}/>
+                        </Switch>
                     </React.Suspense>
                 </div>
             </div>

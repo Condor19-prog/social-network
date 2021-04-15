@@ -12,7 +12,7 @@
     cursor: pointer;
 }
 
-.pageNumber.selectedPage {
+.selectedPage {
     font-weight: bold;
     border-color: black;
 }
