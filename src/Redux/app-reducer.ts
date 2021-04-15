@@ -11,11 +11,12 @@ type initialState = typeof initialState
 
 export const appReducer = (state = initialState, action: actionsType): initialState => {
     switch (action.type) {
-        case SET_INITIALIZED_SUCCESS:
+        case SET_INITIALIZED_SUCCESS: {
             return {
                 ...state,
                 initialized: true
             }
+        }
         default:
             return state
     }

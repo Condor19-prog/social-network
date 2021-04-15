@@ -16,7 +16,7 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
         render() {
             let {isAuth, ...restProps} = this.props
 
-            if (!isAuth) return <Redirect to={'/login'}/>
+            if (!isAuth) return <Redirect to={'/Login'}/>
             return <Component {...restProps as T}/>
         }
     }

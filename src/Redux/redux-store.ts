@@ -9,7 +9,7 @@ import usersReducer, {
     setUsersTotalCountType,
     UnFollowActionType
 } from "./users-reducer";
-import {authReducer} from "./auth-reducer";
+import {authReducer, getCaptchaUrlSuccess} from "./auth-reducer";
 import thunk from "redux-thunk";
 import {reducer as formReducer} from 'redux-form'
 import {appReducer, setInitializedSuccessAction} from "./app-reducer";
@@ -31,7 +31,8 @@ export type actionsType =
     ReturnType<typeof setStatusAC> |
     setInitializedSuccessAction |
     deletePostACType |
-    savePhotoSuccessACType
+    savePhotoSuccessACType |
+    ReturnType<typeof getCaptchaUrlSuccess>
 
 export type setUserDataType = {
     type: 'SET_USER_DATA'

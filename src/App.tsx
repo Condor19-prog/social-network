@@ -13,17 +13,16 @@ import Preloader from "./components/Common/Preloader/Preloader";
 import {WithSuspense} from "./hok/WithSuspense";
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const Login = React.lazy(() => import("./components/Login/Login"));
+const LoginPage = React.lazy(() => import("./components/Login/Login"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 
 type appType = {
     initialized: boolean
 }
 
-class App extends React.Component<appType> {
+class App extends React.Component<any> {
 
     componentDidMount() {
-        // @ts-ignore
         this.props.initializeAppTC()
     }
 
@@ -36,14 +35,14 @@ class App extends React.Component<appType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={s.appWrapperContent}>
-
-                    {/*@ts-ignore*/}
-                    <Route exact path='/Profile/:userId?' render={WithSuspense(ProfileContainer)}/>
-                    {/*@ts-ignore*/}
-                    <Route path='/Dialogs' render={WithSuspense(DialogsContainer)}/>
-                    <Route path='/Users' render={() => <UsersContainer/>}/>
-                    <Route path='/Login' render={() => WithSuspense(Login)}/>
-
+                    <React.Suspense fallback={<Preloader/>}>
+                        {/*@ts-ignore*/}
+                        <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                        {/*@ts-ignore*/}
+                        <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
+                        <Route path='/Users' render={() => <UsersContainer/>}/>
+                        <Route path='/Login' render={() => <LoginPage/>}/>
+                    </React.Suspense>
                 </div>
             </div>
         );

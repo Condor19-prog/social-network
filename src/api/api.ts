@@ -44,7 +44,7 @@ export const ProfileAPI = {
             }
         })
     },
-    saveProfile(profile: profileType){
+    saveProfile(profile: profileType) {
         return instance.put('profile', profile)
     }
 }
@@ -52,17 +52,24 @@ export const authAPI = {
     me() {
         return instance.get(`auth/me`)
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean = false, captcha: string | null) {
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
     },
     logOut() {
         return instance.delete(`auth/login`)
     }
 }
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get(`security/get-captcha-url`)
+    }
+}
+
 export enum ResultCodesEnum {
     Success = 0,
     Error = 1
 }
+
 export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
     data: D
     messages: Array<string>
