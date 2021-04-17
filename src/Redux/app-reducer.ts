@@ -1,5 +1,7 @@
 import {actionsType} from "./redux-store";
 import {getAuthUserDataTC} from "./auth-reducer";
+import {Dispatch} from "redux";
+import {ThunkType} from "./profile-reducer";
 
 export type setInitializedSuccessAction = ReturnType<typeof setInitializedSuccessAC>
 const SET_INITIALIZED_SUCCESS = 'SET_INITIALIZED_SUCCESS'
@@ -23,12 +25,11 @@ export const appReducer = (state = initialState, action: actionsType): initialSt
 }
 export const setInitializedSuccessAC = () => ({type: SET_INITIALIZED_SUCCESS} as const)
 
-export const initializeAppTC = () => (dispatch: any) => {
+export const initializeAppTC = (): ThunkType => (dispatch) => {
     let promise = dispatch(getAuthUserDataTC())
 
-    Promise.all([promise])
+    return Promise.all([promise])
         .then(() => {
             dispatch(setInitializedSuccessAC())
         })
-
 }

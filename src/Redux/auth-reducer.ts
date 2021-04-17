@@ -2,6 +2,7 @@ import {actionsType, setUserDataType} from "./redux-store";
 import {Dispatch} from "redux";
 import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {ThunkType} from "./profile-reducer";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'GET_CAPTCHA_URL_SUCCESS'
@@ -22,7 +23,7 @@ export const authReducer = (state = initialState, action: actionsType): initialS
                 ...action.payload
             }
         }
-        case "GET_CAPTCHA_URL_SUCCESS":{
+        case "GET_CAPTCHA_URL_SUCCESS": {
             return {...state, ...action.payload}
         }
         default:
@@ -45,16 +46,16 @@ export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
     }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string | null) => async (dispatch: any) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => async (dispatch) => {
 
     let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
-        dispatch(getAuthUserDataTC())
+        await dispatch(getAuthUserDataTC())
     } else {
-        if (response.data.resultCode === 10){
-            dispatch(getCaptchaUrl())
+        if (response.data.resultCode === 10) {
+            await dispatch(getCaptchaUrl())
         }
-            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {email: message}))
     }
 }

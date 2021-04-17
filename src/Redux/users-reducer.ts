@@ -2,7 +2,6 @@ import {actionsType} from "./redux-store";
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/api";
 import {userType} from "../types/types";
-import {createDeflateRaw} from "zlib";
 import {updateObjectInArray} from "../utils/objectHelpers";
 
 const FOLLOW = 'FOLLOW'
@@ -42,9 +41,9 @@ type initialStateType = typeof initialState
 
 const initialState = {
     users: [] as userType[],
-    pageSize: 10,
-    totalUsersCount: 0,
-    currentPage: 1,
+    pageSize: 10,  //кол-во юзеров на странице
+    totalUsersCount: 0,  //кол-во юзеров всего
+    currentPage: 1, //текущая страница
     isFetching: false,
     followingInProgress: [] as Array<number>
 }
@@ -67,7 +66,7 @@ export const usersReducer = (state: initialStateType = initialState, action: act
         case UNFOLLOW: {
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
                 //     state.users.map(u => {
                 //     if (u.id === action.userId) {
                 //         return {...u, followed: false}
@@ -89,12 +88,12 @@ export const usersReducer = (state: initialStateType = initialState, action: act
             return {...state, isFetching: action.isFetching}
         }
         case TOGGLE_IS_FOLLOWING_PROGRESS: {
-            return <initialStateType>{
+            return {
                 ...state,
                 followingInProgress: action.isFetching ?
                     [...state.followingInProgress, action.userId] :
                     [state.followingInProgress.filter(id => id !== action.userId)]
-            }
+            } as initialStateType
         }
         default:
             return state
@@ -130,7 +129,9 @@ export const getUsersTC = (page: number, pageSize: number) => async (dispatch: D
     dispatch(setUsers(data.items))
     dispatch(setUsersTotalCount(data.totalCount))
 }
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: any, actionCreator: Function) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => Promise<any>, actionCreator: (userId: number) =>
+    followActionType | UnFollowActionType) => {
+    debugger
     dispatch(toggleInFollowingProgress(true, userId))
     const response = await apiMethod(userId)
     if (response.data.resultCode === 0) {
@@ -140,12 +141,12 @@ const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod:
 }
 export const followTC = (userId: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.follow.bind(userId)
-     followUnfollowFlow(dispatch, userId, apiMethod, followSuccess)
+    await followUnfollowFlow(dispatch, userId, apiMethod, followSuccess)
 }
 
 export const unFollowTC = (userId: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.unfollow.bind(userId)
-    followUnfollowFlow(dispatch, userId, apiMethod, unFollowSuccess)
+    await followUnfollowFlow(dispatch, userId, apiMethod, unFollowSuccess)
 }
 
 
