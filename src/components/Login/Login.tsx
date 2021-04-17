@@ -17,6 +17,7 @@ export type formDataType = {
     rememberMe: boolean
     captcha: string
 }
+type LoginFormValueTypeKey = Extract<keyof formDataType, string>
 
 const LoginForm: React.FC<InjectedFormProps<formDataType, loginFormOwnProps> & loginFormOwnProps> = ({
                                                                                                          handleSubmit,
@@ -26,11 +27,11 @@ const LoginForm: React.FC<InjectedFormProps<formDataType, loginFormOwnProps> & l
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                {createField('Email', 'email', Input, requiredField, {type: 'text'})}
-                {createField('Password', 'password', Input, requiredField, {type: 'password'})}
-                {createField('', 'rememberMe', Input, null, {type: 'checkbox'}, 'rememberMe')}
-                {captcha && <img src={captcha}/>}
-                {captcha && createField('Symbols from image', 'captcha', Input, requiredField, {type: 'text'})}
+                {createField<LoginFormValueTypeKey>('Email', 'email', Input, [requiredField], {type: 'text'})}
+                {createField<LoginFormValueTypeKey>('Password', 'password', Input, [requiredField], {type: 'password'})}
+                {createField<LoginFormValueTypeKey>(undefined, 'rememberMe', Input, [], {type: 'checkbox'}, 'rememberMe')}
+                {captcha && <img src={captcha} alt={'123'}/>}
+                {captcha && createField<LoginFormValueTypeKey>('Symbols from image', 'captcha', Input, [requiredField], {type: 'text'})}
 
                 {error && <div className={s.formSummaryError}>{error}</div>}
                 <div>
@@ -66,7 +67,7 @@ const Login: React.FC<loginPropsType> = ({isAuth, captcha}) => {
         </div>
     )
 }
-const mapStateToProps = (state: rootStateType) => ({
+const mapStateToProps = (state: rootStateType): loginPropsType => ({
     isAuth: state.auth.isAuth,
     captcha: state.auth.captcha
 })

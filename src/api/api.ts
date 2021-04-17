@@ -50,7 +50,7 @@ export const ProfileAPI = {
 }
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`)
+        return instance.get(`auth/me`).then(res => res.data)
     },
     login(email: string, password: string, rememberMe: boolean = false, captcha: string | null) {
         return instance.post(`auth/login`, {email, password, rememberMe, captcha})
@@ -67,9 +67,15 @@ export const securityAPI = {
 
 export enum ResultCodesEnum {
     Success = 0,
-    Error = 1
+    Error = 1,
+    CaptchaIsRequired = 10
 }
 
+type DataType = {
+    id: number
+    email: string
+    login: string
+}
 export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
     data: D
     messages: Array<string>

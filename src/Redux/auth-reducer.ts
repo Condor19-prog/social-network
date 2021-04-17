@@ -39,7 +39,9 @@ export const getCaptchaUrlSuccess = (captcha: string) => ({
 } as const)
 
 export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
+    debugger
     let response = await authAPI.me()
+
     if (response.data.resultCode === 0) {
         let {login, id, email} = response.data.data
         dispatch(setAuthUserDataAC(id, email, login, true))
@@ -47,7 +49,7 @@ export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => async (dispatch) => {
-
+debugger
     let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         await dispatch(getAuthUserDataTC())
