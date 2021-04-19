@@ -2,7 +2,7 @@ import React from "react";
 import s from './Header.module.css'
 import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {logOutTC} from "../../Redux/auth-reducer";
+import {logOut} from "../../Redux/auth-reducer";
 
 type headerPropsType = {
     isAuth: boolean
@@ -14,7 +14,7 @@ function Header(props: headerPropsType) {
     const dispatch = useDispatch()
 
     const logOut = () => {
-        dispatch(logOutTC())
+        dispatch(logOut())
     }
     return (
         <header className={s.header}>

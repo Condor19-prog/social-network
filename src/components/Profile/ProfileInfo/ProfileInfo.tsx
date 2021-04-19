@@ -4,15 +4,15 @@ import Preloader from "../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/photo/user-male.png';
 import ProfileDataFormReduxForm from "./ProfileDataForm";
-import {contactsType, profileType} from "../../../types/types";
+import {contactsType, ProfileType} from "../../../types/types";
 
 
 type profileInfoPropsType = {
-    profile: profileType | null
+    profile: ProfileType | null
     status: string
     isOwner: boolean
     savePhoto: (file: File) => void
-    saveProfile: (profile: profileType) => Promise<any>
+    saveProfile: (profile: ProfileType) => Promise<any>
     updateStatus: (status: string) => void
 }
 
@@ -35,7 +35,7 @@ const ProfileInfo: React.FC<profileInfoPropsType> = ({
             savePhoto(e.target.files[0])
         }
     }
-    const onSubmit = (formData: profileType) => {
+    const onSubmit = (formData: ProfileType) => {
         debugger
         saveProfile(formData)
             .then(() => {
@@ -64,7 +64,7 @@ const ProfileInfo: React.FC<profileInfoPropsType> = ({
 }
 
 type profileDataType = {
-    profile: profileType
+    profile: ProfileType
     isOwner: boolean
     goToEditMode: () => void
 }

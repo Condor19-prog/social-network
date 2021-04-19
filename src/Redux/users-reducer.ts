@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 import {UserType} from "../types/types";
 import {updateObjectInArray} from "../utils/objectHelpers";
 import {usersAPI} from "../api/usersAPI";
+import {ResultCodesEnum} from "../api/api";
 
 type ActionType = InferActionsTypes<typeof action>
 type initialStateType = typeof initialState
@@ -104,7 +105,7 @@ const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod:
 
     dispatch(action.toggleInFollowingProgress(true, userId))
     const response = await apiMethod(userId)
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(actionCreator(userId))
     }
     dispatch(action.toggleInFollowingProgress(false, userId))

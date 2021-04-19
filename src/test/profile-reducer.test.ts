@@ -1,13 +1,13 @@
 import {v1} from "uuid";
 import profileReducer, {addPostAC, deletePostAC} from "../Redux/profile-reducer";
-import {profileType} from "../types/types";
+import {ProfileType} from "../types/types";
 
 const state = {
     posts: [
         {id: v1(), message: 'Bonjour', likesCount: 12},
         {id: v1(), message: 'Когда вернешь долг?', likesCount: 100000}
     ],
-    profile: null as profileType | null,
+    profile: null as ProfileType | null,
     status: 'Hi! i am React JS Junior developer and I am looking for a job'
 }
 

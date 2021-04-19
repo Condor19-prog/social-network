@@ -4,7 +4,7 @@ export type postsType = {
     likesCount: number
 }
 
-export  type photosType = {
+export  type PhotosType = {
     small: string | null
     large: string | null
 }
@@ -18,18 +18,18 @@ export  type contactsType = {
     youtube: string
     mainLink: string
 }
-export type profileType = {
+export type ProfileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
     contacts: contactsType
-    photos: photosType
+    photos: PhotosType
     aboutMe: string
 }
 export type UserType = {
     id: number
-    photos: photosType
+    photos: PhotosType
     name: string
     status: string
     followed: boolean

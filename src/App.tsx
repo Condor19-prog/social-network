@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 import {initializeAppTC} from "./Redux/app-reducer";
-import {rootStateType} from "./Redux/redux-store";
+import {RootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {WithSuspense} from "./hok/WithSuspense";
 
@@ -59,7 +59,7 @@ class App extends React.Component<any> {
     }
 }
 
-const mapStateToProps = (state: rootStateType) => ({
+const mapStateToProps = (state: RootStateType) => ({
     initialized: state.app.initialized
 })
 export default compose<any>(

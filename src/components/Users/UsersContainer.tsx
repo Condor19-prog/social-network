@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
-import {rootStateType} from "../../Redux/redux-store";
+import {RootStateType} from "../../Redux/redux-store";
 import {followTC, getUsersTC, unFollowTC,} from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
@@ -60,7 +60,7 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
     )
 }
 
-const mapStateToProps = (state: rootStateType): mapStateToPropsType => {
+const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
     return {
         users: getUsers(state),
         // users: getUsers(state),
@@ -96,7 +96,7 @@ const mapStateToProps = (state: rootStateType): mapStateToPropsType => {
 // }
 
 
-export default compose(connect<mapStateToPropsType, mapDispatchToPropsType, ownPropsType, rootStateType>(mapStateToProps, {
+export default compose(connect<mapStateToPropsType, mapDispatchToPropsType, ownPropsType, RootStateType>(mapStateToProps, {
         followTC, unFollowTC
     }
 ))(UsersContainer)

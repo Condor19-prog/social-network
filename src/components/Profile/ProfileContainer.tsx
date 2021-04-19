@@ -2,30 +2,23 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from "../../Redux/profile-reducer";
-import {rootStateType} from "../../Redux/redux-store";
+import {RootStateType} from "../../Redux/redux-store";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 import {RouteComponentProps} from "react-router-dom";
-import {profileType} from "../../types/types";
+import {ProfileType} from "../../types/types";
 
 type PathParamsType = {
     userId: string
 }
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>
-// type MapStateToPropsType = {
-//     profile: any
-//     isAuth: any
-//     status: string
-//     updateStatus: string
-//     saveProfile: any
-// }
 
 type mapDispatchPropsType = {
     getUserProfile: (userId: number) => void
     getStatus: (userId: number) => void
     updateStatus: (status: string) => void
     savePhoto: (file: File) => void
-    saveProfile: (profile: profileType) => Promise<any>
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
 // type OwnPropsType = MapStateToPropsType & MapDispatchPropsType
@@ -67,7 +60,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 }
 
-const mapStateToProps = (state: rootStateType) => ({
+const mapStateToProps = (state: RootStateType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,

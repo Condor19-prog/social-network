@@ -2,8 +2,8 @@ import React from "react";
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {dialogPageType} from "../../Redux/redux-store";
 import AddMessageForm, {addMessageFormType} from "./AddMessagesForm/AddMessagesForm";
+import {dialogPageType} from "../../Redux/redux-store";
 
 
 type dialogsPropsType = {
