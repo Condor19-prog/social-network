@@ -5,10 +5,11 @@ import {
     setUserProfileType,
 } from "./redux-store";
 import {Dispatch} from "redux";
-import {ProfileAPI, usersAPI} from "../api/api";
 import {photosType, postsType, profileType} from "../types/types";
 import { stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk";
+import {usersAPI} from "../api/usersAPI";
+import {ProfileAPI} from "../api/profileAPI";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
@@ -73,7 +74,7 @@ export const savePhotoSuccessAC = (photos: photosType) => ({type: SAVE_PHOTO_SUC
 
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
-    const response = await usersAPI.getProfile(userId)
+    const response = await ProfileAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
 }
 

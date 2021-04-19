@@ -4,7 +4,7 @@ import {rootStateType} from "../../Redux/redux-store";
 import {followTC, getUsersTC, unFollowTC,} from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
-import {userType} from "../../types/types";
+import {UserType} from "../../types/types";
 import {
     followingInProgress,
     getCurrentPage,
@@ -15,7 +15,7 @@ import {
 } from "../../Redux/users-selector";
 
 type mapStateToPropsType = {
-    users: Array<userType>
+    users: Array<UserType>
     totalUsersCount: number
     pageSize: number
     currentPage: number

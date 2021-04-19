@@ -27,7 +27,7 @@ export type profileType = {
     photos: photosType
     aboutMe: string
 }
-export type userType = {
+export type UserType = {
     id: number
     photos: photosType
     name: string

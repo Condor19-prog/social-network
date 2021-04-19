@@ -2,7 +2,7 @@ import React from "react";
 import s from './users.module.css'
 import axios from 'axios';
 import userPhoto from '../../assets/photo/user-male.png'
-import {userType} from "../../types/types";
+import {UserType} from "../../types/types";
 
 class UsersC extends React.Component<any, any> {
 
@@ -16,7 +16,7 @@ class UsersC extends React.Component<any, any> {
     render() {
         return <div>
             {
-                this.props.users.map((u: userType) => <div key={u.id}>
+                this.props.users.map((u: UserType) => <div key={u.id}>
                 <span>
                     <div>
                         <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPhoto}

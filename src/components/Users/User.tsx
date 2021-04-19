@@ -2,10 +2,10 @@ import React from "react";
 import s from "./users.module.css";
 import userPhoto from "../../assets/photo/user-male.png";
 import {NavLink} from "react-router-dom";
-import {userType} from "../../types/types";
+import {UserType} from "../../types/types";
 
 type usersPropsType = {
-    user: userType
+    user: UserType
     unFollowTC: (userId: number) => void
     followTC: (userId: number) => void
     followingInProgress: number[]

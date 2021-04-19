@@ -1,33 +1,20 @@
 import {combineReducers, createStore, applyMiddleware, compose} from "redux";
 import profileReducer, {addPostACType, deletePostACType, savePhotoSuccessACType, setStatusAC} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
-import usersReducer, {
-    followActionType, followingInProgressType,
-    setCurrentPageType,
-    setIsFetchingType,
-    setUsersActionType,
-    setUsersTotalCountType,
-    UnFollowActionType
-} from "./users-reducer";
 import {authReducer, getCaptchaUrlSuccess} from "./auth-reducer";
 import thunk from "redux-thunk";
 import {reducer as formReducer} from 'redux-form'
 import {appReducer, setInitializedSuccessAction} from "./app-reducer";
+import usersReducer from "./users-reducer";
 
 export type actionsType =
     addPostActionType |
     updateNewPostTextType |
     sendMessageType |
     addPostACType |
-    followActionType |
-    UnFollowActionType |
-    setUsersActionType |
-    setCurrentPageType |
-    setUsersTotalCountType |
-    setIsFetchingType |
+
     setUserProfileType |
     setUserDataType |
-    followingInProgressType |
     ReturnType<typeof setStatusAC> |
     setInitializedSuccessAction |
     deletePostACType |
@@ -85,7 +72,6 @@ const reducers = combineReducers({
 })
 
 export type rootStateType = ReturnType<typeof reducers>
-export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 
 declare global {
     interface Window {
@@ -95,6 +81,9 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+
+type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
+export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any}> = ReturnType<PropertiesTypes<T>>
 
 // let store = createStore(reducers, applyMiddleware(thunk))
 

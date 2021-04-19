@@ -1,12 +1,12 @@
 import React from "react";
 import Preloader from "../Common/Preloader/Preloader";
-import {userType} from "../../types/types";
+import {UserType} from "../../types/types";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
 import s from './users.module.css'
 
 type usersPropsType = {
-    users: Array<userType>
+    users: Array<UserType>
     isFetching: boolean
     followingInProgress: number[]
     pageSize: number
