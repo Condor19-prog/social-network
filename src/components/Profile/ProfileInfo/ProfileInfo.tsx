@@ -7,7 +7,7 @@ import ProfileDataFormReduxForm from "./ProfileDataForm";
 import {contactsType, ProfileType} from "../../../types/types";
 
 
-type profileInfoPropsType = {
+type ProfileInfoPropsType = {
     profile: ProfileType | null
     status: string
     isOwner: boolean
@@ -16,7 +16,7 @@ type profileInfoPropsType = {
     updateStatus: (status: string) => void
 }
 
-const ProfileInfo: React.FC<profileInfoPropsType> = ({
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                                          profile,
                                                          status,
                                                          isOwner,
@@ -36,7 +36,7 @@ const ProfileInfo: React.FC<profileInfoPropsType> = ({
         }
     }
     const onSubmit = (formData: ProfileType) => {
-        debugger
+
         saveProfile(formData)
             .then(() => {
                 setEditMode(false)
@@ -63,32 +63,34 @@ const ProfileInfo: React.FC<profileInfoPropsType> = ({
     )
 }
 
-type profileDataType = {
+type ProfileDataType = {
     profile: ProfileType
     isOwner: boolean
     goToEditMode: () => void
 }
-const ProfileData = (props: profileDataType) => {
-    const {profile} = props
+const ProfileData: React.FC<ProfileDataType> = ({profile,isOwner,goToEditMode}) => {
+
 
     return (
         <div>
-            {props.isOwner &&
+            {isOwner &&
             <div>
-                <button onClick={props.goToEditMode}>Edit</button>
+                <button onClick={goToEditMode}>Edit</button>
             </div>}
             <div><b>Full name:</b> {profile.fullName}</div>
             <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
             {profile.lookingForAJob &&
             <div>
-                <b>My professional skills:</b>{props.profile.lookingForAJobDescription}
+                <b>My professional skills:</b>{profile.lookingForAJobDescription}
             </div>
             }
             <div>
                 <b>About me:</b> {profile.aboutMe}
             </div>
             <div>
-                <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
+                <b>Contacts:</b> {Object
+                .keys(profile.contacts)
+                .map(key => {
                 return <Contacts key={key} contactTitle={key}
                                  contactValue={profile.contacts[key as keyof contactsType]}/>
             })}

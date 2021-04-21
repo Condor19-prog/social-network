@@ -1,20 +1,20 @@
 import React from "react";
 import Post from "./Post/Post";
 import s from './Posts.module.css'
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, requiredField} from "../../../utils/validators/validator";
-import {Textarea} from "../../Common/FormsControls/FormsControls";
 import {postsType} from "../../../types/types";
+import {AddNewPostFormRedux, AddNewPostFormType} from "./AddPostForm/AddPostForm";
 
 
-type myPostsType = {
+export type MapPropsType = {
     posts: Array<postsType>
-    addPost: (values: string) => void
+}
+export type DispatchPropsType = {
+    addPost: (newPostText: string) => void
 }
 
 
-const MyPosts = React.memo((props: myPostsType) => {
-    console.log('yo')
+const MyPosts: React.FC<MapPropsType & DispatchPropsType> = (props) => {
+
     let postsElements = props.posts.map(p => <Post message={p.message}
                                                    likeCounts={p.likesCount}
                                                    key={p.id}
@@ -34,26 +34,6 @@ const MyPosts = React.memo((props: myPostsType) => {
             </div>
         </div>
     )
-})
-
-const maxLength10 = maxLengthCreator(10)
-type AddNewPostFormType = {
-    newPostText: string
 }
-const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormType>> = (props) => {
-    return (
-        <div>
-            <form onSubmit={props.handleSubmit}>
-                <Field name='newPostText' component={Textarea} validate={[requiredField, maxLength10]}
-                       placeholder='post message'/>
-                <div>
-                    <button>Add post</button>
-                </div>
-            </form>
 
-        </div>
-    )
-}
-const AddNewPostFormRedux = reduxForm<AddNewPostFormType>({form: 'AddNewPostForm'})(AddNewPostForm)
-
-export default MyPosts
+export default React.memo(MyPosts)

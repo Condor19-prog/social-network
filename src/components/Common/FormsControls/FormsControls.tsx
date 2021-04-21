@@ -2,10 +2,13 @@ import React from "react";
 import s from './FormsControl.module.css'
 import {Field, WrappedFieldMetaProps, WrappedFieldProps, WrappedFieldsProps} from "redux-form";
 import {FieldValidatorType} from "../../../utils/validators/validator";
+import {LoginFormValuesType} from "../../Login/Login";
 
 type FormControlPropsType = {
     meta: WrappedFieldMetaProps
 }
+export type GetStringKeys<T> = Extract<keyof T, string>
+
 const FormControl: React.FC<FormControlPropsType> = ({meta: {touched, error}, children}) => {
     const hasError = touched && error
     return (

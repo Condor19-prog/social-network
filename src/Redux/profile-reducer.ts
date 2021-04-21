@@ -18,7 +18,7 @@ const initialState = {
     status: ''
 }
 
-const profileReducer = (state = initialState , action: ActionsTypes): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
         case 'ADD-POST': {
@@ -46,20 +46,20 @@ const profileReducer = (state = initialState , action: ActionsTypes): InitialSta
             return {...state, status: action.status}
         }
         case 'SAVE_PHOTO_SUCCESS': {
-            return {...state, profile: {...state.profile, photos: action.photos}}
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
         }
         default:
             return state
     }
 }
 export const action = {
-    addPostAC: (newPostText: string) => {
+    addPost: (newPostText: string) => {
         return ({type: "ADD-POST", newPostText} as const)
     },
-    deletePostAC: (postId: string) => {
+    deletePost: (postId: string) => {
         return ({type: "DELETE-POST", postId} as const)
     },
-    setStatusAC: (status: string) => {
+    setStatus: (status: string) => {
         return ({type: 'SET-STATUS', status} as const)
     },
     setUserProfile: (profile: ProfileType) => ({type: 'SET-USER-PROFILE', profile} as const),
@@ -73,12 +73,12 @@ export const getUserProfile = (userId: number): ThunkType =>
 
 export const getStatus = (userId: number): ThunkType => async (dispatch) => {
     let data = await ProfileAPI.getStatus(userId)
-    dispatch(action.setStatusAC(data))
+    dispatch(action.setStatus(data))
 }
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     let data = await ProfileAPI.updateStatus(status)
     if (data.resultCode === ResultCodesEnum.Success) {
-        dispatch(action.setStatusAC(status))
+        dispatch(action.setStatus(status))
     }
 }
 export const savePhoto = (file: File): ThunkType => async (dispatch) => {

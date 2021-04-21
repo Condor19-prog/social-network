@@ -1,20 +1,19 @@
 import React from "react";
 import s from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {logOut} from "../../Redux/auth-reducer";
 
-type headerPropsType = {
+export type MapPropsType = {
     isAuth: boolean
     login: string | null
 }
+export type DispatchPropsType = {
+    logOut: () => void
+}
 
-function Header(props: headerPropsType) {
-
-    const dispatch = useDispatch()
+const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
 
     const logOut = () => {
-        dispatch(logOut())
+        props.logOut()
     }
     return (
         <header className={s.header}>
@@ -28,6 +27,6 @@ function Header(props: headerPropsType) {
             </div>
         </header>
     )
-}
+};
 
 export default Header

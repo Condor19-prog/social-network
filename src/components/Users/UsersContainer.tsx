@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
-import {followTC, getUsersTC, unFollowTC,} from "../../Redux/users-reducer";
+import {follow, getUsersTC, unFollow,} from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
 import {UserType} from "../../types/types";
@@ -10,8 +10,7 @@ import {
     getCurrentPage,
     getIsFetching,
     getPageSize,
-    getTotalUsersCount,
-    getUsers
+    getTotalUsersCount, getUsers,
 } from "../../Redux/users-selector";
 
 type mapStateToPropsType = {
@@ -23,8 +22,8 @@ type mapStateToPropsType = {
     followingInProgress: number[]
 }
 type mapDispatchToPropsType = {
-    unFollowTC: (userId: number) => void
-    followTC: (userId: number) => void
+    unFollow: (userId: number) => void
+    follow: (userId: number) => void
 }
 type ownPropsType = {
     //свои пропсы какие то
@@ -47,8 +46,8 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
         <>
             <Users
                 users={props.users}
-                followTC={props.followTC}
-                unFollowTC={props.unFollowTC}
+                follow={props.follow}
+                unFollow={props.unFollow}
                 followingInProgress={props.followingInProgress}
                 currentPage={props.currentPage}
                 pageSize={props.pageSize}
@@ -97,6 +96,6 @@ const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
 
 
 export default compose(connect<mapStateToPropsType, mapDispatchToPropsType, ownPropsType, RootStateType>(mapStateToProps, {
-        followTC, unFollowTC
+        follow, unFollow
     }
 ))(UsersContainer)

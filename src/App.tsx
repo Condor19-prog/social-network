@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import s from './App.module.css'
 import Navbar from "./components/Navbar/Navbar";
@@ -7,27 +7,27 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
-import {initializeAppTC} from "./Redux/app-reducer";
+import {initializeApp} from "./Redux/app-reducer";
 import {RootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
-import {WithSuspense} from "./hok/WithSuspense";
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const LoginPage = React.lazy(() => import("./components/Login/Login"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 
-type appType = {
-    initialized: boolean
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+    initializeApp: () => void
 }
 
-class App extends React.Component<any> {
+class App extends React.Component<MapPropsType & DispatchPropsType> {
 
     catchAllUnhandledErrors = () => {
         alert('Some error occurred')
     }
 
     componentDidMount() {
-        this.props.initializeAppTC()
+        this.props.initializeApp()
         window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
@@ -62,5 +62,5 @@ class App extends React.Component<any> {
 const mapStateToProps = (state: RootStateType) => ({
     initialized: state.app.initialized
 })
-export default compose<any>(
-    withRouter, connect(mapStateToProps, {initializeAppTC}))(App)
+export default compose<ComponentType>(
+    withRouter, connect(mapStateToProps, {initializeApp}))(App)

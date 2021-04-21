@@ -2,22 +2,24 @@ import React from "react";
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import AddMessageForm, {addMessageFormType} from "./AddMessagesForm/AddMessagesForm";
-import {dialogPageType} from "../../Redux/redux-store";
+import AddMessageForm from "./AddMessagesForm/AddMessagesForm";
+import {InitialStateType} from "../../Redux/dialogs-reducer";
 
 
-type dialogsPropsType = {
-    dialogsPage: dialogPageType
-    sendMessage: (values: any) => void
-    isAuth: boolean
+type DialogsPropsType = {
+    dialogsPage: InitialStateType
+    sendMessage: (newMessageBody: string) => void
+}
+export type NewMessageFormType = {
+    newMessageBody: string
 }
 
-function Dialogs(props: dialogsPropsType) {
-    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name} key={d.id}/>)
-    const messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} key={m.id}/>)
+const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, sendMessage}) => {
+    const dialogsElements = dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name} key={d.id}/>)
+    const messagesElements = dialogsPage.messages.map(m => <Message message={m.message} key={m.id}/>)
 
-    const addNewMessage = (values: addMessageFormType) => {
-        props.sendMessage(values.newMessageBody)
+    const addNewMessage = (values: NewMessageFormType) => {
+        sendMessage(values.newMessageBody)
     }
 
     return (
@@ -31,6 +33,6 @@ function Dialogs(props: dialogsPropsType) {
             <AddMessageForm onSubmit={addNewMessage}/>
         </div>
     )
-}
+};
 
 export default Dialogs

@@ -21,10 +21,13 @@ type mapDispatchPropsType = {
     saveProfile: (profile: ProfileType) => Promise<any>
 }
 
-// type OwnPropsType = MapStateToPropsType & MapDispatchPropsType
 type PropsType = mapStateToPropsType & mapDispatchPropsType & RouteComponentProps<PathParamsType>
 
 class ProfileContainer extends React.Component<PropsType> {
+    constructor(props: PropsType) {
+        super(props);
+    }
+
     refreshProfile() {
         let userId: number | null = +this.props.match.params.userId
         if (!userId) {
@@ -33,8 +36,8 @@ class ProfileContainer extends React.Component<PropsType> {
                 this.props.history.push("/Login");
             }
         }
-        this.props.getUserProfile(Number(userId))
-        this.props.getStatus(Number(userId))
+        this.props.getUserProfile(userId as number)
+        this.props.getStatus(userId as number)
     }
 
     componentDidMount() {
@@ -47,15 +50,18 @@ class ProfileContainer extends React.Component<PropsType> {
         }
     }
 
+    componentWillUnmount() {
+    }
+
     render() {
         return (
-                <Profile {...this.props}
-                         isOwner={!this.props.match.params.userId}
-                         profile={this.props.profile}
-                         status={this.props.status}
-                         savePhoto={this.props.savePhoto}
-                         saveProfile={this.props.saveProfile}
-                />
+            <Profile {...this.props}
+                     isOwner={!this.props.match.params.userId}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     savePhoto={this.props.savePhoto}
+                     saveProfile={this.props.saveProfile}
+            />
         )
     }
 }
@@ -67,4 +73,10 @@ const mapStateToProps = (state: RootStateType) => ({
     isAuth: state.auth.isAuth
 })
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { getUserProfile, getStatus, savePhoto, saveProfile, updateStatus}), withRouter)(ProfileContainer)
+    connect(mapStateToProps, {
+        getUserProfile,
+        getStatus,
+        savePhoto,
+        saveProfile,
+        updateStatus
+    }), withRouter)(ProfileContainer)

@@ -13,13 +13,13 @@ type usersPropsType = {
     totalUsersCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    followTC: (userId: number) => void
-    unFollowTC: (userId: number) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
 }
 
 const Users: React.FC<usersPropsType> = ({
                                              users, isFetching, followingInProgress, pageSize,
-                                             totalUsersCount, currentPage, onPageChanged, followTC, unFollowTC
+                                             totalUsersCount, currentPage, onPageChanged, follow, unFollow
                                          }) => {
 
     return (
@@ -32,8 +32,8 @@ const Users: React.FC<usersPropsType> = ({
                 users.map(u => <User key={u.id}
                                      user={u}
                                      followingInProgress={followingInProgress}
-                                     followTC={followTC}
-                                     unFollowTC={unFollowTC}/>
+                                     follow={follow}
+                                     unFollow={unFollow}/>
                 )
             }
         </div>
