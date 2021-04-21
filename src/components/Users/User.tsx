@@ -11,6 +11,7 @@ type UsersPropsType = {
     followingInProgress: number[]
 }
 
+
 const Users: React.FC<UsersPropsType> = ({user, followingInProgress, unFollow, follow}) => {
 
     return (
