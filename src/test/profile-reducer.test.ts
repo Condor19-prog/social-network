@@ -1,6 +1,7 @@
 import {v1} from "uuid";
-import profileReducer, {addPostAC, deletePostAC} from "../Redux/profile-reducer";
+import profileReducer from "../Redux/profile-reducer";
 import {ProfileType} from "../types/types";
+import {action} from '../Redux/profile-reducer'
 
 const state = {
     posts: [
@@ -13,20 +14,20 @@ const state = {
 
 test('length of post should be incremented', () => {
 
-    const action = addPostAC('new text')
-    const newState = profileReducer(state, action)
+    const a = action.addPost('new text')
+    const newState = profileReducer(state, a)
     expect(newState.posts.length).toBe(3)
 })
 test('message of new post should be correct', () => {
 
-    const action = addPostAC('new text')
-    const newState = profileReducer(state, action)
+    const a = action.addPost('new text')
+    const newState = profileReducer(state, a)
     expect(newState.posts.length).toBe(3)
     expect(newState.posts[2].message).toBe('new text')
 })
 
 test('after deleting length of messages should be decrement', () => {
-    const action = deletePostAC(state.posts[0].id)
-    const newState = profileReducer(state, action)
+    const a = action.deletePost(state.posts[0].id)
+    const newState = profileReducer(state, a)
     expect(newState.posts.length).toBe(1)
 })

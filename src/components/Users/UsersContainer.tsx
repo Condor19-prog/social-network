@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
-import {follow, getUsersTC, unFollow,} from "../../Redux/users-reducer";
+import {FilterType, follow, requestUsers, unFollow,} from "../../Redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
 import {UserType} from "../../types/types";
@@ -10,7 +10,7 @@ import {
     getCurrentPage,
     getIsFetching,
     getPageSize,
-    getTotalUsersCount, getUsers,
+    getTotalUsersCount, getUsers, getUsersFilter,
 } from "../../Redux/users-selector";
 
 type mapStateToPropsType = {
@@ -20,10 +20,12 @@ type mapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    filter: FilterType
 }
 type mapDispatchToPropsType = {
     unFollow: (userId: number) => void
     follow: (userId: number) => void
+    requestUsers: (page: number, pageSize: number, filter: FilterType) => void
 }
 type ownPropsType = {
     //свои пропсы какие то
@@ -35,11 +37,15 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getUsersTC(props.currentPage, props.pageSize))
+        dispatch(requestUsers(props.currentPage, props.pageSize, props.filter))
     }, [props.currentPage, props.pageSize])
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(getUsersTC(pageNumber, props.pageSize))
+        dispatch(requestUsers(pageNumber, props.pageSize, props.filter))
+    }
+    const onFilterChanged = (filter: FilterType) => {
+        const {pageSize} = props
+        props.requestUsers(1, pageSize, filter)
     }
 
     return (
@@ -54,6 +60,7 @@ const UsersContainer = (props: usersAPIComponentPropsType) => {
                 totalUsersCount={props.totalUsersCount}
                 onPageChanged={onPageChanged}
                 isFetching={props.isFetching}
+                onFilterChanged={onFilterChanged}
             />
         </>
     )
@@ -68,6 +75,7 @@ const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: followingInProgress(state),
+        filter: getUsersFilter(state)
     }
 }
 // let withRedirect = withAuthRedirect(UsersContainer)
@@ -96,6 +104,6 @@ const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
 
 
 export default compose(connect<mapStateToPropsType, mapDispatchToPropsType, ownPropsType, RootStateType>(mapStateToProps, {
-        follow, unFollow
+        follow, unFollow, requestUsers
     }
 ))(UsersContainer)

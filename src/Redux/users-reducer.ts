@@ -7,6 +7,7 @@ import {ResultCodesEnum} from "../api/api";
 
 type ActionType = InferActionsTypes<typeof action>
 type initialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 const initialState = {
     users: [] as UserType[],
@@ -14,7 +15,11 @@ const initialState = {
     totalUsersCount: 0,  //кол-во юзеров всего
     currentPage: 1, //текущая страница
     isFetching: false,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 
@@ -56,6 +61,9 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
         case "TOGGLE_IS_FETCHING": {
             return {...state, isFetching: action.isFetching}
         }
+        case "USERS/SET_FILTER": {
+            return {...state, filter: action.payload}
+        }
         case "TOGGLE_IS_FOLLOWING_PROGRESS": {
             return {
                 ...state,
@@ -89,13 +97,17 @@ export const action = {
     },
     toggleInFollowingProgress: (isFetching: boolean, userId: number) => {
         return ({type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId} as const)
+    },
+    setFilter: (filter: FilterType) => {
+        return ({type: 'USERS/SET_FILTER', payload: filter} as const)
     }
 }
 
-export const getUsersTC = (page: number, pageSize: number) => async (dispatch: Dispatch) => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType) => async (dispatch: Dispatch) => {
     dispatch(action.toggleIsFetching(true))
     dispatch(action.setCurrentPage(page))
-    const data = await usersAPI.getUsers(page, pageSize)
+    dispatch(action.setFilter(filter))
+    const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
     dispatch(action.toggleIsFetching(false))
     dispatch(action.setUsers(data.items))
     dispatch(action.setUsersTotalCount(data.totalCount))
