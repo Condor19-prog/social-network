@@ -1,5 +1,5 @@
 import React from "react";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../Redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {InjectedFormProps, reduxForm} from "redux-form";
@@ -44,16 +44,15 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, loginFormOwnPro
     )
 }
 
-type loginPropsType = {
-    isAuth: boolean
-    captcha: string | null
-}
 
 export const LoginReduxForm = reduxForm<LoginFormValuesType, loginFormOwnProps>({form: 'login'})(LoginForm)
 
-const Login: React.FC<loginPropsType> = ({isAuth, captcha}) => {
-
+export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
+
+    const captcha = useSelector((state: RootStateType) => state.auth.captcha)
+    const isAuth = useSelector((state: RootStateType) => state.auth.isAuth)
+
     const onSubmit = (formData: LoginFormValuesType) => {
         dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
@@ -67,11 +66,6 @@ const Login: React.FC<loginPropsType> = ({isAuth, captcha}) => {
         </div>
     )
 }
-const mapStateToProps = (state: RootStateType) => ({
-    isAuth: state.auth.isAuth,
-    captcha: state.auth.captcha
-})
-export default connect(mapStateToProps, {loginTC: login})(Login)
 
 
 

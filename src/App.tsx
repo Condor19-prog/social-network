@@ -2,7 +2,6 @@ import React, {ComponentType} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import s from './App.module.css'
 import Navbar from "./components/Navbar/Navbar";
-import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
@@ -10,9 +9,10 @@ import {compose} from "redux";
 import {initializeApp} from "./Redux/app-reducer";
 import {RootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
+import {UsersPage} from "./components/Users/UsersContainer";
+import {LoginPage} from "./components/Login/Login";
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const LoginPage = React.lazy(() => import("./components/Login/Login"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
@@ -49,7 +49,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                             <Route exact path='/' render={() => <Redirect to={'/Profile'}/>}/>
                             <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
                             <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                            <Route path='/Users' render={() => <UsersContainer/>}/>
+                            <Route path='/Users' render={() => <UsersPage/>}/>
                             <Route path='/Login' render={() => <LoginPage/>}/>
                         </Switch>
                     </React.Suspense>
