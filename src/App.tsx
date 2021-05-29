@@ -1,8 +1,5 @@
 import React, {ComponentType} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import s from './App.module.css'
-import Navbar from "./components/Navbar/Navbar";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import {Link, Redirect, Route, Switch} from 'react-router-dom';
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {compose} from "redux";
@@ -11,6 +8,11 @@ import {RootStateType} from "./Redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {UsersPage} from "./components/Users/UsersContainer";
 import {LoginPage} from "./components/Login/Login";
+import 'antd/dist/antd.css';
+import {Breadcrumb, Layout, Menu} from "antd";
+import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
+import {AppHeader} from "./components/Header/Header";
+
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
@@ -19,6 +21,8 @@ type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
     initializeApp: () => void
 }
+const {SubMenu} = Menu;
+const {Header, Content, Footer, Sider} = Layout;
 
 class App extends React.Component<MapPropsType & DispatchPropsType> {
 
@@ -40,21 +44,57 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
             return <Preloader/>
         }
         return (
-            <div className={s.appWrapper}>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className={s.appWrapperContent}>
-                    <React.Suspense fallback={<Preloader/>}>
-                        <Switch>
-                            <Route exact path='/' render={() => <Redirect to={'/Profile'}/>}/>
-                            <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                            <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                            <Route path='/Users' render={() => <UsersPage/>}/>
-                            <Route path='/Login' render={() => <LoginPage/>}/>
-                        </Switch>
-                    </React.Suspense>
-                </div>
-            </div>
+            <Layout>
+                <AppHeader/>
+                <Content style={{padding: '0 50px'}}>
+                    <Layout className="site-layout-background" style={{padding: '24px 0'}}>
+                        <Sider className="site-layout-background" width={200}>
+                            <Menu
+                                mode="inline"
+                                defaultSelectedKeys={['1']}
+                                // defaultOpenKeys={['sub1']}
+                                style={{height: '100%'}}
+                            >
+                                <SubMenu key="sub1" icon={<UserOutlined/>} title="My profile">
+                                    <Menu.Item key="1"><Link to='/Profile'>Profile</Link>
+                                    </Menu.Item>
+                                    <Menu.Item key="2"> <Link to='Dialogs'>Messages</Link></Menu.Item>
+                                </SubMenu>
+                                <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Developers">
+                                    <Menu.Item key="5"><Link to='Users'>Users</Link></Menu.Item>
+                                </SubMenu>
+                            </Menu>
+                        </Sider>
+                        <Content style={{padding: '0 24px', minHeight: 280}}>
+                            <React.Suspense fallback={<Preloader/>}>
+                                <Switch>
+                                    <Route exact path='/' render={() => <Redirect to={'/Profile'}/>}/>
+                                    <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                                    <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
+                                    <Route path='/Users' render={() => <UsersPage/>}/>
+                                    <Route path='/Login' render={() => <LoginPage/>}/>
+                                </Switch>
+                            </React.Suspense>
+                        </Content>
+                    </Layout>
+                </Content>
+                <Footer style={{textAlign: 'center'}}>Samurai Social Network ©2021 Created by IT-INCUBATOR</Footer>
+            </Layout>
+            // <div className={s.appWrapper}>
+            //     <HeaderContainer/>
+            //     <Navbar/>
+            //     <div className={s.appWrapperContent}>
+            //         <React.Suspense fallback={<Preloader/>}>
+            //             <Switch>
+            //                 <Route exact path='/' render={() => <Redirect to={'/Profile'}/>}/>
+            //                 <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+            //                 <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
+            //                 <Route path='/Users' render={() => <UsersPage/>}/>
+            //                 <Route path='/Login' render={() => <LoginPage/>}/>
+            //             </Switch>
+            //         </React.Suspense>
+            //     </div>
+            // </div>
         );
     }
 }

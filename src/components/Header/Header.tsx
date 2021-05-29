@@ -1,32 +1,36 @@
 import React from "react";
-import s from './Header.module.css'
-import {NavLink} from "react-router-dom";
+import {Avatar, Button, Layout, Space, Typography} from "antd";
+import {UserOutlined} from "@ant-design/icons";
+import {useDispatch, useSelector} from "react-redux";
+import {selectCurrentUser, selectIsAuth} from "../../Redux/auth-selector";
+import {logOut} from "../../Redux/auth-reducer";
+import {Link, NavLink} from "react-router-dom";
 
-export type MapPropsType = {
-    isAuth: boolean
-    login: string | null
-}
-export type DispatchPropsType = {
-    logOut: () => void
-}
+// export type MapPropsType = {}
 
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
+export const AppHeader: React.FC = () => {
+    const isAuth = useSelector(selectIsAuth)
+    const login = useSelector(selectCurrentUser)
+    const dispatch = useDispatch()
 
-    const logOut = () => {
-        props.logOut()
+    const {Header} = Layout
+    const logOutCallback = () => {
+        dispatch(logOut())
     }
+    const {Text, Link} = Typography;
     return (
-        <header className={s.header}>
-            <img src="https://www.tuyid.org/images/clients/logoyazilim.png" alt="logo"/>
-            <div className={s.loginBlock}>
-                {
-                    props.isAuth ?
-                        <div>{props.login} - <button onClick={logOut}>Log Out</button></div> :
+        <Header className="header">
+            {
+                isAuth ?
+                    <Space size={'large'} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                        <Text style={{color: 'white', fontWeight: 'bold'}} italic>{login}</Text>
+                        <Button onClick={logOutCallback}>Log Out</Button>
+                    </Space> :
+                    <Space style={{display: 'flex', justifyContent: 'flex-end'}}>
                         <NavLink to={'/Login'}>Login</NavLink>
-                }
-            </div>
-        </header>
+                    </Space>
+            }
+        </Header>
     )
-};
-
-export default Header
+}

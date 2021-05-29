@@ -5,6 +5,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/photo/user-male.png';
 import ProfileDataFormReduxForm from "./ProfileDataForm";
 import {contactsType, ProfileType} from "../../../types/types";
+import {Button} from "antd";
 
 
 type ProfileInfoPropsType = {
@@ -75,7 +76,7 @@ const ProfileData: React.FC<ProfileDataType> = ({profile,isOwner,goToEditMode}) 
         <div>
             {isOwner &&
             <div>
-                <button onClick={goToEditMode}>Edit</button>
+                <Button type={'primary'} onClick={goToEditMode}>Edit</Button>
             </div>}
             <div><b>Full name:</b> {profile.fullName}</div>
             <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
