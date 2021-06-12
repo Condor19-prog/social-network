@@ -9,13 +9,14 @@ import Preloader from "./components/Common/Preloader/Preloader";
 import {UsersPage} from "./components/Users/UsersContainer";
 import {LoginPage} from "./components/Login/Login";
 import 'antd/dist/antd.css';
-import {Breadcrumb, Layout, Menu} from "antd";
+import {Layout, Menu} from "antd";
 import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {AppHeader} from "./components/Header/Header";
 
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
+const ChatPage = React.lazy(() => import("./pages/chat/chat"));
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -58,10 +59,11 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                                 <SubMenu key="sub1" icon={<UserOutlined/>} title="My profile">
                                     <Menu.Item key="1"><Link to='/Profile'>Profile</Link>
                                     </Menu.Item>
-                                    <Menu.Item key="2"> <Link to='Dialogs'>Messages</Link></Menu.Item>
+                                    <Menu.Item key="2"> <Link to='/Dialogs'>Messages</Link></Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Developers">
-                                    <Menu.Item key="5"><Link to='Users'>Users</Link></Menu.Item>
+                                    <Menu.Item key="3"><Link to='/Users'>Users</Link></Menu.Item>
+                                    <Menu.Item key="4"><Link to='/Chat'>Chat</Link></Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </Sider>
@@ -73,6 +75,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                                     <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
                                     <Route path='/Users' render={() => <UsersPage/>}/>
                                     <Route path='/Login' render={() => <LoginPage/>}/>
+                                    <Route path='/Chat' render={() => <ChatPage/>}/>
                                 </Switch>
                             </React.Suspense>
                         </Content>

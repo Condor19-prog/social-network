@@ -5,7 +5,8 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/photo/user-male.png';
 import ProfileDataFormReduxForm from "./ProfileDataForm";
 import {contactsType, ProfileType} from "../../../types/types";
-import {Button} from "antd";
+import {UploadOutlined} from '@ant-design/icons';
+import {Button, Upload} from "antd";
 
 
 type ProfileInfoPropsType = {
@@ -47,7 +48,10 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
         <div>
             <div className={s.discriptionBlock}>
                 <img src={profile.photos.large || userPhoto} alt="profile" className={s.namePhoto}/><br/>
-                {isOwner && <input type={'file'} onChange={onMainPhotoSelect}/>}
+                {
+                    isOwner &&
+                    <input type={'file'} onChange={onMainPhotoSelect}/>
+                }
                 {
                     editMode ?
                         <ProfileDataFormReduxForm initialValues={profile}
@@ -69,7 +73,7 @@ type ProfileDataType = {
     isOwner: boolean
     goToEditMode: () => void
 }
-const ProfileData: React.FC<ProfileDataType> = ({profile,isOwner,goToEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
 
 
     return (
@@ -92,9 +96,9 @@ const ProfileData: React.FC<ProfileDataType> = ({profile,isOwner,goToEditMode}) 
                 <b>Contacts:</b> {Object
                 .keys(profile.contacts)
                 .map(key => {
-                return <Contacts key={key} contactTitle={key}
-                                 contactValue={profile.contacts[key as keyof contactsType]}/>
-            })}
+                    return <Contacts key={key} contactTitle={key}
+                                     contactValue={profile.contacts[key as keyof contactsType]}/>
+                })}
             </div>
         </div>
     )
